@@ -4,28 +4,33 @@
   <meta charset="UTF-8" />
   <title>Javier Alfonso Moreno | Marketing Portfolio</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,300;0,700;0,900;1,700&family=Barlow:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;700;900&family=Barlow:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+
   <style>
+    /* ───────────────────────────────────────────────
+       PREMIUM PALETTE — LUXURY TECH BLUE
+    ─────────────────────────────────────────────── */
     :root {
-      --bg:       #08080a;
-      --surface:  #0f0f12;
-      --border:   #1e1e24;
-      --accent:   #e8ff00;
-      --red:      #ff2244;
+      --bg:       #050508;
+      --surface:  #0c0c12;
+      --border:   #1a1a26;
+      --accent:   #00a3ff;
       --text:     #ffffff;
-      --muted:    #ffffff;
-      --faint:    #2a2a32;
+      --muted:    #c3c9d4;
+      --faint:    #2a2a36;
+
       --font-display: 'Barlow Condensed', sans-serif;
       --font-body:    'Barlow', sans-serif;
       --font-mono:    'DM Mono', monospace;
     }
 
+    /* Reset */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     html { scroll-behavior: smooth; }
-
     body {
       font-family: var(--font-body);
       background: var(--bg);
@@ -35,7 +40,9 @@
       cursor: none;
     }
 
-    /* ── CUSTOM CURSOR ── */
+    /* ───────────────────────────────────────────────
+       CUSTOM CURSOR
+    ─────────────────────────────────────────────── */
     .cursor {
       position: fixed;
       top: 0; left: 0;
@@ -51,7 +58,7 @@
       position: fixed;
       top: 0; left: 0;
       width: 40px; height: 40px;
-      border: 1px solid rgba(232,255,0,0.4);
+      border: 1px solid rgba(0,163,255,0.4);
       border-radius: 50%;
       pointer-events: none;
       z-index: 9998;
@@ -59,7 +66,7 @@
       mix-blend-mode: difference;
     }
 
-    /* ── NOISE OVERLAY ── */
+    /* Noise overlay */
     body::before {
       content: '';
       position: fixed;
@@ -70,15 +77,17 @@
       opacity: 0.6;
     }
 
-    /* ── SCROLLBAR ── */
+    /* Scrollbar */
     ::-webkit-scrollbar { width: 3px; }
     ::-webkit-scrollbar-track { background: var(--bg); }
     ::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 99px; }
 
-    /* ── LAYOUT ── */
+    /* Layout */
     .page { max-width: 1200px; margin: 0 auto; padding: 0 28px 80px; position: relative; z-index: 1; }
 
-    /* ── HEADER ── */
+    /* ───────────────────────────────────────────────
+       HEADER
+    ─────────────────────────────────────────────── */
     header {
       padding-top: 56px;
       padding-bottom: 40px;
@@ -143,7 +152,7 @@
     }
 
     .hero-tagline {
-      font-size: 13px;
+      font-size: 14px;
       color: var(--muted);
       max-width: 380px;
       text-align: right;
@@ -157,6 +166,7 @@
       justify-content: flex-end;
     }
 
+    /* Buttons */
     .btn {
       font-family: var(--font-mono);
       font-size: 10px;
@@ -176,10 +186,20 @@
       color: #000;
       font-weight: 500;
     }
-    .btn-primary:hover { filter: brightness(1.08); transform: translateY(-2px); box-shadow: 0 12px 28px rgba(232,255,0,0.25); }
-    .btn-outline:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
+    .btn-primary:hover {
+      filter: brightness(1.08);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 28px rgba(0,163,255,0.25);
+    }
+    .btn-outline:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      transform: translateY(-2px);
+    }
 
-    /* ── STATS BAR ── */
+    /* ───────────────────────────────────────────────
+       STATS BAR
+    ─────────────────────────────────────────────── */
     .stats-bar {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -199,23 +219,12 @@
       transition: background 0.2s;
     }
     .stat-item:last-child { border-right: none; }
-    .stat-item::after {
-      content: '';
-      position: absolute;
-      bottom: 0; left: 0;
-      height: 2px;
-      width: 0;
-      background: var(--accent);
-      transition: width 0.4s ease;
-    }
-    .stat-item:hover::after { width: 100%; }
     .stat-item:hover { background: var(--surface); }
 
     .stat-num {
       font-family: var(--font-display);
       font-size: clamp(28px, 3.5vw, 40px);
       font-weight: 900;
-      line-height: 1;
       color: var(--accent);
       margin-bottom: 4px;
     }
@@ -227,14 +236,16 @@
       color: var(--muted);
     }
 
-    /* ── MAIN GRID ── */
+    /* ───────────────────────────────────────────────
+       MAIN GRID
+    ─────────────────────────────────────────────── */
     main {
       display: grid;
       grid-template-columns: minmax(0, 2.2fr) minmax(0, 1fr);
       gap: 28px;
     }
 
-    /* ── SECTION HEADERS ── */
+    /* Section headers */
     .section-head {
       display: flex;
       align-items: center;
@@ -247,8 +258,8 @@
       letter-spacing: 0.22em;
       text-transform: uppercase;
       color: var(--accent);
-      background: rgba(232,255,0,0.07);
-      border: 1px solid rgba(232,255,0,0.18);
+      background: rgba(0,163,255,0.07);
+      border: 1px solid rgba(0,163,255,0.18);
       padding: 3px 8px;
       border-radius: 2px;
     }
@@ -261,7 +272,7 @@
       color: var(--text);
     }
 
-    /* ── CARDS ── */
+    /* Cards */
     .card {
       background: var(--surface);
       border: 1px solid var(--border);
@@ -270,9 +281,9 @@
       margin-bottom: 24px;
       transition: border-color 0.2s;
     }
-    .card:hover { border-color: var(--faint); }
+    .card:hover { border-color: var(--accent); }
 
-    /* ── ABOUT ── */
+    /* About */
     .about-text {
       font-size: 14px;
       color: var(--muted);
@@ -294,9 +305,13 @@
       transition: all 0.15s;
     }
     .pill:hover { border-color: var(--accent); color: var(--accent); }
-    .pill-hot { border-color: rgba(232,255,0,0.3); color: var(--accent); background: rgba(232,255,0,0.05); }
+    .pill-hot {
+      border-color: rgba(0,163,255,0.3);
+      color: var(--accent);
+      background: rgba(0,163,255,0.05);
+    }
 
-    /* ── PROJECTS ── */
+    /* Projects */
     .projects-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
@@ -312,20 +327,11 @@
       overflow: hidden;
       transition: transform 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease;
     }
-    .project-card::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(135deg, rgba(232,255,0,0.04) 0%, transparent 60%);
-      opacity: 0;
-      transition: opacity 0.3s;
-    }
     .project-card:hover {
       transform: translateY(-4px);
-      border-color: rgba(232,255,0,0.25);
-      box-shadow: 0 16px 40px rgba(0,0,0,0.5);
+      border-color: var(--accent);
+      box-shadow: 0 16px 40px rgba(0,163,255,0.15);
     }
-    .project-card:hover::before { opacity: 1; }
 
     .project-tag {
       font-family: var(--font-mono);
@@ -360,7 +366,7 @@
       border-top: 1px solid var(--border);
     }
 
-    /* ── EXPERIENCE TIMELINE ── */
+    /* Timeline */
     .timeline { position: relative; }
     .timeline::before {
       content: '';
@@ -431,7 +437,7 @@
     }
     .timeline-bullets li strong { color: var(--text); font-weight: 500; }
 
-    /* ── SIDEBAR CARDS ── */
+    /* Sidebar */
     .side-card {
       background: var(--surface);
       border: 1px solid var(--border);
@@ -492,448 +498,4 @@
       font-size: 9px;
       letter-spacing: 0.14em;
       text-transform: uppercase;
-      color: var(--accent);
-    }
-
-    .edu-item { margin-bottom: 14px; }
-    .edu-item:last-child { margin-bottom: 0; }
-    .edu-degree {
-      font-size: 12px;
-      color: var(--text);
-      font-weight: 500;
-      margin-bottom: 2px;
-    }
-    .edu-uni {
-      font-family: var(--font-mono);
-      font-size: 10px;
-      color: var(--muted);
-      letter-spacing: 0.06em;
-    }
-    .edu-year {
-      font-family: var(--font-mono);
-      font-size: 9px;
-      color: var(--accent);
-    }
-
-    .contact-row {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
-    .contact-item { display: flex; flex-direction: column; gap: 2px; }
-    .contact-label {
-      font-family: var(--font-mono);
-      font-size: 8px;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
-    .contact-value { font-size: 11px; color: var(--text); }
-
-    /* ── MARQUEE ── */
-    .marquee-wrap {
-      overflow: hidden;
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-      padding: 10px 0;
-      margin-bottom: 32px;
-      opacity: 0;
-      animation: fadeIn 0.8s 0.9s forwards;
-    }
-    .marquee-inner {
-      display: flex;
-      gap: 0;
-      white-space: nowrap;
-      animation: marquee 22s linear infinite;
-    }
-    .marquee-text {
-      font-family: var(--font-display);
-      font-size: 12px;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.22em;
-      color: var(--muted);
-      padding-right: 40px;
-    }
-    .marquee-text span { color: var(--accent); margin-right: 40px; }
-
-    /* ── FOOTER ── */
-    footer {
-      margin-top: 48px;
-      padding-top: 20px;
-      border-top: 1px solid var(--border);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 12px;
-    }
-    .footer-copy {
-      font-family: var(--font-mono);
-      font-size: 9px;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
-    .footer-links {
-      display: flex;
-      gap: 16px;
-    }
-    .footer-links a {
-      font-family: var(--font-mono);
-      font-size: 9px;
-      text-transform: uppercase;
-      letter-spacing: 0.18em;
-      color: var(--muted);
-      text-decoration: none;
-      transition: color 0.15s;
-    }
-    .footer-links a:hover { color: var(--accent); }
-
-    /* ── ANIMATIONS ── */
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to   { opacity: 1; }
-    }
-    @keyframes marquee {
-      from { transform: translateX(0); }
-      to   { transform: translateX(-50%); }
-    }
-    @keyframes fillBar {
-      to { transform: scaleX(1); }
-    }
-
-    /* scroll reveal */
-    .reveal {
-      opacity: 0;
-      transform: translateY(24px);
-      transition: opacity 0.6s ease, transform 0.6s ease;
-    }
-    .reveal.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    /* ── RESPONSIVE ── */
-    @media (max-width: 860px) {
-      main { grid-template-columns: 1fr; }
-      .stats-bar { grid-template-columns: repeat(2, 1fr); }
-      .projects-grid { grid-template-columns: 1fr; }
-      .hero-tagline { text-align: left; }
-      .hero-actions { justify-content: flex-start; }
-    }
-    @media (max-width: 520px) {
-      .hero-name { font-size: 56px; }
-      .stats-bar { grid-template-columns: 1fr 1fr; }
-      .page { padding-inline: 16px; }
-    }
-  </style>
-</head>
-<body>
-
-  <div class="cursor" id="cursor"></div>
-  <div class="cursor-ring" id="cursorRing"></div>
-
-  <div class="page">
-
-    <!-- ── HEADER ── -->
-    <header>
-      <div class="header-eyebrow">Marketing Portfolio · 2026</div>
-      <h1 class="hero-name">Javier<br><span>Alfonso</span><br>Moreno</h1>
-      <div class="hero-rule"></div>
-      <div class="hero-bottom">
-        <div class="hero-role">Senior Marketing Manager<br>Running &amp; Training · Europe</div>
-        <div>
-          <p class="hero-tagline">Pan-European marketing leader. 4+ years at PUMA Group turning strategy into market share, campaigns into culture, and budgets into business results.</p>
-          <div class="hero-actions">
-            <button class="btn btn-primary" onclick="window.print()">Download CV</button>
-            <button class="btn btn-outline" onclick="document.getElementById('projects').scrollIntoView({behavior:'smooth'})">View work ↓</button>
-          </div>
-        </div>
-      </div>
-    </header>
-
-    <!-- ── STATS BAR ── -->
-    <div class="stats-bar">
-      <div class="stat-item">
-        <div class="stat-num">1B+</div>
-        <div class="stat-label">Impressions · Go Wild 2025</div>
-      </div>
-      <div class="stat-item">
-        <div class="stat-num">€10M</div>
-        <div class="stat-label">Budget managed · EMEA</div>
-      </div>
-      <div class="stat-item">
-        <div class="stat-num">0→3%</div>
-        <div class="stat-label">Market share · Running EU</div>
-      </div>
-      <div class="stat-item">
-        <div class="stat-num">50%</div>
-        <div class="stat-label">Sell-through · 4 weeks</div>
-      </div>
-    </div>
-
-    <!-- ── MARQUEE ── -->
-    <div class="marquee-wrap">
-      <div class="marquee-inner">
-        <div class="marquee-text">Running <span>·</span> Training <span>·</span> EMEA Campaigns <span>·</span> GTM Strategy <span>·</span> Influencer Activation <span>·</span> Experiential Marketing <span>·</span> Partner Activation <span>·</span> Full-Funnel <span>·</span></div>
-        <div class="marquee-text">Running <span>·</span> Training <span>·</span> EMEA Campaigns <span>·</span> GTM Strategy <span>·</span> Influencer Activation <span>·</span> Experiential Marketing <span>·</span> Partner Activation <span>·</span> Full-Funnel <span>·</span></div>
-      </div>
-    </div>
-
-    <!-- ── MAIN GRID ── -->
-    <main>
-      <div>
-
-        <!-- ABOUT -->
-        <div class="reveal">
-          <div class="section-head">
-            <span class="section-tag">Profile</span>
-            <span class="section-title">About</span>
-          </div>
-          <div class="card">
-            <p class="about-text">
-              I don't just run campaigns. I build the <strong>marketing infrastructure that moves categories.</strong><br><br>
-              In four years at PUMA, I went from intern to Senior Marketing Manager — not by waiting for opportunities, but by creating them. I took a Running category with <strong>zero European market share</strong> and helped turn it into a growing, culturally relevant business. I built ambassador strategies that became blueprints. I activated partnerships that others had only planned on paper. I delivered events that people still talk about.<br><br>
-              My work sits at the intersection of <strong>brand and commerce.</strong> I understand how a storytelling decision on Monday affects sell-through on Friday. I know how to align a room full of stakeholders across five countries — and then actually execute.
-            </p>
-            <div class="pill-row">
-              <span class="pill pill-hot">Running &amp; Training</span>
-              <span class="pill">Full-funnel campaigns</span>
-              <span class="pill">Partner activation</span>
-              <span class="pill">Influencer strategy</span>
-              <span class="pill">Experiential marketing</span>
-              <span class="pill">GTM execution</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- PROJECTS -->
-        <div class="reveal" id="projects">
-          <div class="section-head">
-            <span class="section-tag">Selected work</span>
-            <span class="section-title">Key Projects</span>
-          </div>
-          <div class="card">
-            <div class="projects-grid">
-              <article class="project-card">
-                <div class="project-tag">Running · Market share</div>
-                <h3 class="project-title">Running Category Growth — Europe</h3>
-                <p class="project-text">As Running Marketing Lead for EMEA, grew Running category market share in Europe from 0% to 3% in under 12 months by aligning GTM, campaign sequencing and partner activation across key markets.</p>
-                <div class="project-metric">+3pts market share · 12 months · Pan-European</div>
-              </article>
-              <article class="project-card">
-                <div class="project-tag">Full-funnel · Campaign</div>
-                <h3 class="project-title">Go Wild 2025 — Pan-European Campaign</h3>
-                <p class="project-text">Delivered PUMA's largest Running campaign in Europe — a full-funnel activation integrating paid, owned and earned channels, creators and retail to drive brand heat and sell-through.</p>
-                <div class="project-metric">1B impressions · 20% engagement · +10% sales</div>
-              </article>
-              <article class="project-card">
-                <div class="project-tag">Experiential · Events</div>
-                <h3 class="project-title">The High Point &amp; Hyrox Europe</h3>
-                <p class="project-text">Delivered The High Point – Boston Marathon 2025, Faster Monza 2023 and Hyrox Europe roll-out — integrating event experience, content, PR and creator strategy into frameworks that generated measurable brand heat.</p>
-                <div class="project-metric">Multi-market · Press coverage · Community engagement</div>
-              </article>
-              <article class="project-card">
-                <div class="project-tag">Trade · Partners</div>
-                <h3 class="project-title">Hyrox &amp; Intersport Omnichannel</h3>
-                <p class="project-text">Led omnichannel activations with Hyrox and Intersport across 10+ European markets, integrating influencer strategy, event planning, content and PR into single campaign frameworks.</p>
-                <div class="project-metric">10+ markets · Key account leadership</div>
-              </article>
-            </div>
-          </div>
-        </div>
-
-        <!-- EXPERIENCE -->
-        <div class="reveal">
-          <div class="section-head">
-            <span class="section-tag">Career</span>
-            <span class="section-title">Experience</span>
-          </div>
-          <div class="card">
-            <div class="timeline">
-              <div class="timeline-item">
-                <div class="timeline-date">Jan 2025 — Present</div>
-                <div class="timeline-role">Senior Marketing Manager</div>
-                <div class="timeline-company">PUMA Group · Running &amp; Training Europe</div>
-                <ul class="timeline-bullets">
-                  <li>Grew Running market share from <strong>0% to 3%</strong> across Europe in under 12 months.</li>
-                  <li>Delivered <strong>Go Wild 2025</strong> — 1B impressions, 20% engagement, +10% sales uplift.</li>
-                  <li>Managed a <strong>€10M multi-market budget</strong> across Running, Training, Football and Handball.</li>
-                  <li>Led omnichannel activations with Hyrox and Intersport across <strong>10+ European markets.</strong></li>
-                  <li>Aligned GTM, Sales, Product and Creative teams across EMEA for consistent brand execution.</li>
-                </ul>
-              </div>
-              <div class="timeline-item">
-                <div class="timeline-date">Jan 2022 — Dec 2024</div>
-                <div class="timeline-role">Marketing Manager</div>
-                <div class="timeline-company">PUMA Group · Running &amp; Training Europe</div>
-                <ul class="timeline-bullets">
-                  <li>Drove Running sell-through to <strong>50% in first 4 weeks</strong> through campaign sequencing and channel alignment.</li>
-                  <li>Secured <strong>Pamela Reif</strong> as PUMA's European Training ambassador — strategy became the EMEA blueprint.</li>
-                  <li>Led <strong>Intersport International</strong> campaign strategy across Europe — PUMA's largest wholesale partner.</li>
-                  <li>Established the European Training category marketing function <strong>from scratch.</strong></li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-
-      </div>
-
-      <!-- ── SIDEBAR ── -->
-      <aside>
-
-        <div class="reveal">
-          <div class="side-card">
-            <div class="side-title">Core Skills</div>
-            <div class="skill-row">
-              <span class="skill-name">Full-funnel campaigns</span>
-              <div class="skill-bar"><div class="skill-fill" style="width:95%"></div></div>
-            </div>
-            <div class="skill-row">
-              <span class="skill-name">GTM Strategy</span>
-              <div class="skill-bar"><div class="skill-fill" style="width:92%; animation-delay:1.1s"></div></div>
-            </div>
-            <div class="skill-row">
-              <span class="skill-name">Partner Activation</span>
-              <div class="skill-bar"><div class="skill-fill" style="width:90%; animation-delay:1.2s"></div></div>
-            </div>
-            <div class="skill-row">
-              <span class="skill-name">Event Marketing</span>
-              <div class="skill-bar"><div class="skill-fill" style="width:88%; animation-delay:1.3s"></div></div>
-            </div>
-            <div class="skill-row">
-              <span class="skill-name">Budget &amp; ROI</span>
-              <div class="skill-bar"><div class="skill-fill" style="width:85%; animation-delay:1.4s"></div></div>
-            </div>
-            <div class="skill-row">
-              <span class="skill-name">Cross-functional leadership</span>
-              <div class="skill-bar"><div class="skill-fill" style="width:90%; animation-delay:1.5s"></div></div>
-            </div>
-            <div class="skill-row">
-              <span class="skill-name">Influencer Strategy</span>
-              <div class="skill-bar"><div class="skill-fill" style="width:88%; animation-delay:1.6s"></div></div>
-            </div>
-            <div class="skill-row">
-              <span class="skill-name">Data-driven optimisation</span>
-              <div class="skill-bar"><div class="skill-fill" style="width:80%; animation-delay:1.7s"></div></div>
-            </div>
-          </div>
-        </div>
-
-        <div class="reveal">
-          <div class="side-card">
-            <div class="side-title">Languages</div>
-            <div class="lang-item">
-              <span class="lang-name">Spanish</span>
-              <span class="lang-level">Native</span>
-            </div>
-            <div class="lang-item">
-              <span class="lang-name">English</span>
-              <span class="lang-level">Proficient · C1</span>
-            </div>
-            <div class="lang-item">
-              <span class="lang-name">German</span>
-              <span class="lang-level">Beginner · A1/A2</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="reveal">
-          <div class="side-card">
-            <div class="side-title">Education</div>
-            <div class="edu-item">
-              <div class="edu-degree">MBA in Sport Management</div>
-              <div class="edu-uni">Polytechnic University of Valencia</div>
-              <div class="edu-year">2020 – 2022</div>
-            </div>
-            <div class="edu-item">
-              <div class="edu-degree">Master in Big Data in Sports</div>
-              <div class="edu-uni">UCAM Universidad Católica de Murcia</div>
-              <div class="edu-year">2020 – 2021</div>
-            </div>
-            <div class="edu-item">
-              <div class="edu-degree">Bachelor in Sports Science</div>
-              <div class="edu-uni">University of Valencia</div>
-              <div class="edu-year">2016 – 2020</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="reveal">
-          <div class="side-card">
-            <div class="side-title">Contact</div>
-            <div class="contact-row">
-              <div class="contact-item">
-                <span class="contact-label">Email</span>
-                <span class="contact-value">javier.alfonso.moreno@gmail.com</span>
-              </div>
-              <div class="contact-item">
-                <span class="contact-label">Phone</span>
-                <span class="contact-value">+34 622 889 027</span>
-              </div>
-              <div class="contact-item">
-                <span class="contact-label">Location</span>
-                <span class="contact-value">Fürth, Germany · EMEA</span>
-              </div>
-              <div class="contact-item">
-                <span class="contact-label">Positioning</span>
-                <span class="contact-value">Senior Marketing Manager · Running &amp; Training · Europe</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-      </aside>
-    </main>
-
-    <footer>
-      <div class="footer-copy">© 2026 Javier Alfonso Moreno — Marketing Portfolio</div>
-      <div class="footer-links">
-        <a href="#about">Profile</a>
-        <a href="#projects">Projects</a>
-        <a href="#skills">Skills</a>
-      </div>
-    </footer>
-
-  </div>
-
-  <script>
-    // Custom cursor
-    const cursor = document.getElementById('cursor');
-    const ring   = document.getElementById('cursorRing');
-    let mx = 0, my = 0, rx = 0, ry = 0;
-    document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
-    function animCursor() {
-      cursor.style.transform = `translate(${mx - 6}px, ${my - 6}px)`;
-      rx += (mx - rx) * 0.12;
-      ry += (my - ry) * 0.12;
-      ring.style.transform = `translate(${rx - 20}px, ${ry - 20}px)`;
-      requestAnimationFrame(animCursor);
-    }
-    animCursor();
-
-    document.querySelectorAll('a, button').forEach(el => {
-      el.addEventListener('mouseenter', () => cursor.style.transform += ' scale(2)');
-      el.addEventListener('mouseleave', () => {});
-    });
-
-    // Scroll reveal
-    const reveals = document.querySelectorAll('.reveal');
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach((entry, i) => {
-        if (entry.isIntersecting) {
-          setTimeout(() => entry.target.classList.add('visible'), i * 80);
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.08 });
-    reveals.forEach(el => observer.observe(el));
-  </script>
-</body>
-</html>
+      color
