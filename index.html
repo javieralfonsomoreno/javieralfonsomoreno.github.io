@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="utf-8" />
   <title>Javier Alfonso Moreno | Marketing Portfolio</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -34,12 +34,11 @@
       color:var(--text);
       line-height:1.6;
       overflow-x:hidden;
-      cursor:none;
       -webkit-font-smoothing:antialiased;
       -moz-osx-font-smoothing:grayscale;
     }
 
-    /* Custom cursor */
+    /* Cursor */
     .cursor{position:fixed;top:0;left:0;width:12px;height:12px;background:var(--accent);border-radius:50%;pointer-events:none;z-index:9999;transition:transform .12s ease,opacity .2s;mix-blend-mode:difference}
     .cursor-ring{position:fixed;top:0;left:0;width:40px;height:40px;border:1px solid rgba(0,163,255,.35);border-radius:50%;pointer-events:none;z-index:9998;transition:transform .22s ease;mix-blend-mode:difference}
 
@@ -75,7 +74,7 @@
     .hero-tagline{font-size:14px;color:var(--muted);max-width:380px;line-height:1.7}
     .hero-actions{display:flex;gap:10px;margin-top:6px}
 
-    .btn{font-family:var(--font-mono);font-size:10px;text-transform:uppercase;letter-spacing:.18em;padding:10px 18px;border-radius:2px;border:1px solid var(--border);background:transparent;color:var(--text);cursor:none;transition:all .18s}
+    .btn{font-family:var(--font-mono);font-size:10px;text-transform:uppercase;letter-spacing:.18em;padding:10px 18px;border-radius:2px;border:1px solid var(--border);background:transparent;color:var(--text);transition:all .18s}
     .btn-primary{background:var(--accent);border-color:var(--accent);color:#000;font-weight:500}
     .btn-primary:hover{filter:brightness(1.08);transform:translateY(-2px);box-shadow:0 12px 28px rgba(0,163,255,.25)}
     .btn-outline:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-2px)}
@@ -221,8 +220,8 @@
         </div>
 
         <div class="hero-photo">
-          <!-- Drive direct link (public view) -->
-          <img src="https://drive.google.com/uc?export=view&id=1m4EatmhEMNczeNi7x6BMm-IRbSl7KPhu" alt="Javier Alfonso Moreno">
+          <!-- Google Drive direct-view link (public share required) -->
+          <img id="heroImage" src="https://drive.google.com/uc?export=download&id=1m4EatmhEMNczeNi7x6BMm-IRbSl7KPhu" alt="Javier Alfonso Moreno" loading="lazy" width="180" height="180">
         </div>
       </div>
     </header>
@@ -480,45 +479,101 @@
     </footer>
   </div>
 
-  <!-- Scripts: cursor + scroll reveal -->
-  <script>
-    // Custom cursor
-    const cursor = document.getElementById('cursor');
-    const ring = document.getElementById('cursorRing');
-    let mx = 0, my = 0, rx = 0, ry = 0;
-    document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
-    function animCursor(){
-      if(!cursor || !ring) return;
-      cursor.style.transform = `translate(${mx - 6}px, ${my - 6}px)`;
-      rx += (mx - rx) * 0.12;
-      ry += (my - ry) * 0.12;
-      ring.style.transform = `translate(${rx - 20}px, ${ry - 20}px)`;
-      requestAnimationFrame(animCursor);
-    }
-    animCursor();
+  <!-- Fallback image (data URI small SVG) -->
+  <svg id="fallbackSVG" xmlns="http://www.w3.org/2000/svg" width="180" height="180" viewBox="0 0 180 180" style="display:none">
+    <rect width="100%" height="100%" fill="#0c0c12"/>
+    <circle cx="90" cy="60" r="36" fill="#00a3ff" />
+    <rect x="30" y="110" width="120" height="36" rx="6" fill="#00a3ff"/>
+  </svg>
 
-    // enlarge cursor on interactive elements
-    document.querySelectorAll('a, button').forEach(el => {
-      el.addEventListener('mouseenter', () => {
-        if(cursor) cursor.style.transform += ' scale(2)';
+  <!-- Scripts: cursor + scroll reveal + image fallback -->
+  <script>
+    // Cursor
+    (function(){
+      const cursor = document.getElementById('cursor');
+      const ring = document.getElementById('cursorRing');
+      let mx = 0, my = 0, rx = 0, ry = 0;
+      document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+      function animCursor(){
+        if(!cursor || !ring) return;
+        cursor.style.transform = `translate(${mx - 6}px, ${my - 6}px)`;
+        rx += (mx - rx) * 0.12;
+        ry += (my - ry) * 0.12;
+        ring.style.transform = `translate(${rx - 20}px, ${ry - 20}px)`;
+        requestAnimationFrame(animCursor);
+      }
+      animCursor();
+
+      document.querySelectorAll('a, button').forEach(el => {
+        el.addEventListener('mouseenter', () => {
+          if(cursor) cursor.style.transform += ' scale(2)';
+        });
+        el.addEventListener('mouseleave', () => {
+          if(cursor) cursor.style.transform = `translate(${mx - 6}px, ${my - 6}px)`;
+        });
       });
-      el.addEventListener('mouseleave', () => {
-        // reset by forcing transform recalculation on next frame
-        if(cursor) cursor.style.transform = `translate(${mx - 6}px, ${my - 6}px)`;
-      });
-    });
+    })();
 
     // Scroll reveal
-    const reveals = document.querySelectorAll('.reveal');
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry, i) => {
-        if(entry.isIntersecting){
-          setTimeout(() => entry.target.classList.add('visible'), i * 80);
-          observer.unobserve(entry.target);
+    (function(){
+      const reveals = document.querySelectorAll('.reveal');
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry, i) => {
+          if(entry.isIntersecting){
+            setTimeout(() => entry.target.classList.add('visible'), i * 80);
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.08 });
+      reveals.forEach(el => observer.observe(el));
+    })();
+
+    // Image fallback logic for Google Drive hotlink issues
+    (function(){
+      const img = document.getElementById('heroImage');
+      if(!img) return;
+
+      // If image fails to load, try alternative strategies in order
+      const alternatives = [
+        // 1) Drive view (sometimes works better)
+        'https://drive.google.com/uc?export=view&id=1m4EatmhEMNczeNi7x6BMm-IRbSl7KPhu',
+        // 2) Drive download (already first attempt), try forcing download param
+        'https://drive.google.com/uc?export=download&id=1m4EatmhEMNczeNi7x6BMm-IRbSl7KPhu',
+        // 3) Placeholder via CDN (reliable)
+        'https://via.placeholder.com/360x360/00a3ff/000000?text=Javier',
+      ];
+
+      let attempt = 0;
+      function tryNext(){
+        if(attempt >= alternatives.length){
+          // final fallback: inline SVG (data URL)
+          const svg = document.getElementById('fallbackSVG');
+          if(svg){
+            const xml = new XMLSerializer().serializeToString(svg);
+            img.src = 'data:image/svg+xml;base64,' + btoa(xml);
+            img.style.borderRadius = '50%';
+          }
+          return;
         }
+        img.src = alternatives[attempt++];
+      }
+
+      // If initial load errors, cycle alternatives
+      img.addEventListener('error', () => {
+        tryNext();
       });
-    }, { threshold: 0.08 });
-    reveals.forEach(el => observer.observe(el));
+
+      // If image loads but is blocked (CORS or content-type), we still want to ensure it's visible:
+      // After a short timeout, if naturalWidth is 0, try next.
+      setTimeout(() => {
+        if(img.naturalWidth === 0) tryNext();
+      }, 1200);
+
+      // Ensure image becomes visible with animation when loaded
+      img.addEventListener('load', () => {
+        img.style.opacity = '1';
+      });
+    })();
   </script>
 </body>
 </html>
