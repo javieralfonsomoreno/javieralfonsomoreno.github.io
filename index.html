@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Javier Alfonso Moreno | Marketing Portfolio</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    :root {
+      --bg: #050505;
+      --bg-alt: #101010;
+      --card: #151515;
+      --border: #262626;
+      --accent: #ff0039;
+      --text: #f5f5f5;
+      --muted: #b3b3b3;
+      --font-main: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-main);
+      background: radial-gradient(circle at top, #202020 0, #050505 55%);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .page {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 32px 20px 64px;
+    }
+
+    header {
+      padding: 40px 24px 32px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, #111111 0%, #050505 60%, #1b1b1b 100%);
+      border: 1px solid #2b2b2b;
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.6);
+      display: grid;
+      grid-template-columns: minmax(0, 2fr) minmax(0, 1.2fr);
+      gap: 24px;
+    }
+
+    .hero-title {
+      font-size: clamp(32px, 4vw, 40px);
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      margin-bottom: 8px;
+    }
+
+    .hero-role {
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--accent);
+      margin-bottom: 16px;
+    }
+
+    .hero-tagline {
+      font-size: 14px;
+      color: var(--muted);
+      max-width: 520px;
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      align-items: flex-end;
+      text-align: right;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .hero-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 8px;
+    }
+
+    .btn {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      padding: 8px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--text);
+      cursor: pointer;
+      transition: all 0.18s ease-out;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #ffffff;
+    }
+
+    .btn-primary:hover {
+      filter: brightness(1.1);
+      transform: translateY(-1px);
+      box-shadow: 0 8px 18px rgba(255, 0, 57, 0.35);
+    }
+
+    .btn-outline:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+      transform: translateY(-1px);
+    }
+
+    main {
+      margin-top: 32px;
+      display: grid;
+      grid-template-columns: minmax(0, 2.1fr) minmax(0, 1.1fr);
+      gap: 24px;
+    }
+
+    section {
+      margin-bottom: 24px;
+    }
+
+    .section-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    .section-title {
+      font-size: 18px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      margin-bottom: 12px;
+    }
+
+    .card {
+      background: var(--card);
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      padding: 18px 18px 16px;
+    }
+
+    .about-text {
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .pill {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      padding: 6px 10px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      color: var(--muted);
+    }
+
+    .pill-strong {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 14px;
+    }
+
+    .project-card {
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      padding: 12px 12px 10px;
+      background: linear-gradient(145deg, #151515, #101010);
+    }
+
+    .project-tag {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    .project-title {
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .project-text {
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .project-metric {
+      font-size: 11px;
+      color: var(--accent);
+      margin-top: 4px;
+    }
+
+    .skills-list,
+    .lang-list {
+      list-style: none;
+      font-size: 13px;
+      color: var(--muted);
+      display: grid;
+      gap: 4px;
+    }
+
+    .skills-list li::before,
+    .lang-list li::before {
+      content: "—";
+      margin-right: 6px;
+      color: var(--accent);
+    }
+
+    .tag-block {
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+
+    .tag-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+
+    .tag-value {
+      font-size: 13px;
+    }
+
+    footer {
+      margin-top: 32px;
+      padding-top: 18px;
+      border-top: 1px solid #262626;
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      font-size: 11px;
+      color: var(--muted);
+      flex-wrap: wrap;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a {
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      font-size: 10px;
+      color: var(--muted);
+    }
+
+    .footer-links a:hover {
+      color: var(--accent);
+    }
+
+    @media (max-width: 840px) {
+      header {
+        grid-template-columns: minmax(0, 1fr);
+      }
+      .hero-meta {
+        align-items: flex-start;
+        text-align: left;
+      }
+      main {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    @media (max-width: 520px) {
+      .page {
+        padding-inline: 16px;
+      }
+      .hero-actions {
+        flex-wrap: wrap;
+        justify-content: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <div>
+        <div class="hero-role">Senior Marketing Manager — Running &amp; Training Europe</div>
+        <h1 class="hero-title">Javier Alfonso Moreno</h1>
+        <p class="hero-tagline">
+          Pan-European marketing leader with 4+ years at PUMA Group, turning strategy into measurable outcomes:
+          market share growth, 1B+ impressions, €10M budgets and high-impact experiential events across EMEA.
+        </p>
+      </div>
+      <div class="hero-meta">
+        <div>
+          <div class="hero-label">Contact</div>
+          <div>
+            +34 622 889 027<br />
+            javier.alfonso.moreno@gmail.com
+          </div>
+        </div>
+        <div>
+          <div class="hero-label">Location</div>
+          <div>Europe · EMEA Focus</div>
+        </div>
+        <div class="hero-actions">
+          <button class="btn btn-primary" onclick="window.print()">Download / Print</button>
+          <button class="btn btn-outline" onclick="document.getElementById('projects').scrollIntoView({behavior:'smooth'})">
+            View projects
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <!-- LEFT COLUMN -->
+      <div>
+        <!-- ABOUT -->
+        <section id="about">
+          <div class="section-label">Profile</div>
+          <div class="section-title">About me</div>
+          <div class="card">
+            <p class="about-text">
+              Pan-European marketing leader with 4+ years at PUMA Group, driving category growth from 0% to 3% market share
+              in Running across Europe. Promoted from intern to Senior Marketing Manager by consistently turning strategy into
+              measurable commercial outcomes – including a 1-billion-impression campaign, a €10M budget portfolio, and 50%
+              sell-through in 4 weeks.
+            </p>
+            <div class="pill-row">
+              <span class="pill pill-strong">Running &amp; Training</span>
+              <span class="pill">Full-funnel campaigns</span>
+              <span class="pill">Partner &amp; influencer activation</span>
+              <span class="pill">Experiential marketing</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- PROJECTS -->
+        <section id="projects">
+          <div class="section-label">Selected work</div>
+          <div class="section-title">Key projects</div>
+          <div class="card">
+            <div class="projects-grid">
+              <!-- Proyecto 1 -->
+              <article class="project-card">
+                <div class="project-tag">Running · Market share</div>
+                <h3 class="project-title">Running Category Growth — Europe</h3>
+                <p class="project-text">
+                  As Running Marketing Lead for EMEA, grew Running category market share in Europe from 0% to 3% in under
+                  12 months by aligning GTM, campaign sequencing and partner activation across key markets.
+                </p>
+                <div class="project-metric">
+                  +3 pts market share · 12 months · Pan-European coordination
+                </div>
+              </article>
+
+              <!-- Proyecto 2 -->
+              <article class="project-card">
+                <div class="project-tag">Full-funnel · Campaign</div>
+                <h3 class="project-title">Go Wild 2025 — Pan-European Campaign</h3>
+                <p class="project-text">
+                  Delivered Go Wild 2025, a full-funnel pan-European Running campaign integrating paid, owned and earned
+                  channels, creators and retail to drive both brand heat and sell-through.
+                </p>
+                <div class="project-metric">
+                  1B impressions · 20% engagement · 10% sales uplift
+                </div>
+              </article>
+
+              <!-- Proyecto 3 -->
+              <article class="project-card">
+                <div class="project-tag">Experiential · Events</div>
+                <h3 class="project-title">The High Point &amp; Hyrox Europe</h3>
+                <p class="project-text">
+                  Delivered The High Point – Boston Marathon 2025, Faster Monza 2023 and Hyrox Europe roll-out, integrating
+                  event experience, content, PR and creator strategy into cohesive frameworks that generated measurable brand heat.
+                </p>
+                <div class="project-metric">
+                  Multi-market events · Press coverage · Community engagement
+                </div>
+              </article>
+
+              <!-- Proyecto 4 -->
+              <article class="project-card">
+                <div class="project-tag">Trade · Partners</div>
+                <h3 class="project-title">Hyrox &amp; Intersport Omnichannel Activation</h3>
+                <p class="project-text">
+                  Led omnichannel activations with Hyrox and Intersport across 10+ European markets, integrating influencer
+                  strategy, event planning, content and PR into single campaign frameworks aligned with DTC and wholesale.
+                </p>
+                <div class="project-metric">
+                  10+ markets · Key account leadership · Unified frameworks
+                </div>
+              </article>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <!-- RIGHT COLUMN -->
+      <aside>
+        <!-- SKILLS -->
+        <section id="skills">
+          <div class="section-label">Capabilities</div>
+          <div class="section-title">Skills</div>
+          <div class="card">
+            <ul class="skills-list">
+              <li>Full-funnel campaign management</li>
+              <li>GTM strategy &amp; market activation</li>
+              <li>Partner &amp; influencer activation</li>
+              <li>Experiential &amp; event marketing</li>
+              <li>€10M+ budget management &amp; ROI</li>
+              <li>Cross-functional team leadership</li>
+              <li>Key account management (Hyrox, Intersport)</li>
+              <li>Data-driven performance optimisation</li>
+            </ul>
+          </div>
+        </section>
+
+        <!-- EDUCATION -->
+        <section id="education">
+          <div class="section-label">Background</div>
+          <div class="section-title">Education</div>
+          <div class="card">
+            <div class="tag-block">
+              <div class="tag-label">Bachelor</div>
+              <div class="tag-value">
+                Bachelor in Sports Science<br />
+                University of Valencia · 2016–2020
+              </div>
+            </div>
+            <div class="tag-block">
+              <div class="tag-label">MBA</div>
+              <div class="tag-value">
+                MBA in Sport Management<br />
+                Polytechnic University of Valencia · 2020–2022
+              </div>
+            </div>
+            <div class="tag-block">
+              <div class="tag-label">Master</div>
+              <div class="tag-value">
+                Master in Big Data in Sports<br />
+                UCAM Universidad Católica de Murcia · 2020–2021
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- LANGUAGES -->
+        <section id="languages">
+          <div class="section-label">Global</div>
+          <div class="section-title">Languages</div>
+          <div class="card">
+            <ul class="lang-list">
+              <li>Spanish · Native</li>
+              <li>English · Proficient (C1)</li>
+              <li>German · Beginner (B1)</li>
+            </ul>
+          </div>
+        </section>
+
+        <!-- CONTACT -->
+        <section id="contact">
+          <div class="section-label">Connect</div>
+          <div class="section-title">Contact</div>
+          <div class="card">
+            <div class="tag-block">
+              <div class="tag-label">Email</div>
+              <div class="tag-value">javier.alfonso.moreno@gmail.com</div>
+            </div>
+            <div class="tag-block">
+              <div class="tag-label">Phone</div>
+              <div class="tag-value">+34 622 889 027</div>
+            </div>
+            <div class="tag-block">
+              <div class="tag-label">Positioning</div>
+              <div class="tag-value">
+                Senior Marketing Manager · Running &amp; Training · Europe
+              </div>
+            </div>
+          </div>
+        </section>
+      </aside>
+    </main>
+
+    <footer>
+      <div>© 2026 Javier Alfonso Moreno — Marketing Portfolio.</div>
+      <div class="footer-links">
+        <a href="#about">Profile</a>
+        <a href="#projects">Projects</a>
+        <a href="#skills">Skills</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </footer>
+  </div>
+</body>
+</html>
