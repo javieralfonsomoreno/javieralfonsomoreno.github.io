@@ -663,7 +663,6 @@ footer{
           <img id="heroImage"
                src="assets/profile.jpg"
                alt="Javier Alfonso Moreno"
-               loading="lazy"
                width="180"
                height="180">
         </div>
@@ -1083,20 +1082,6 @@ footer{
      IMAGE FALLBACK (Google Drive)
      — GitHub Pages compatible
   ============================ */
-  (function(){
-    const img = document.getElementById('heroImage');
-    if(!img) return;
-
-    const alternatives = [
-      // 1) Google Drive view
-      "https://drive.google.com/uc?export=view&id=1m4EatmhEMNczeNi7x6BMm-IRbSl7KPhu",
-
-      // 2) Google Drive download
-      "https://drive.google.com/uc?export=download&id=1m4EatmhEMNczeNi7x6BMm-IRbSl7KPhu",
-
-      // 3) Placeholder (si Drive falla)
-      "https://via.placeholder.com/360x360/00a3ff/000000?text=Javier"
-    ];
 
     let attempt = 0;
 
