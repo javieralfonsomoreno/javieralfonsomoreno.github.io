@@ -665,7 +665,11 @@ footer{
     <h1 class="hero-name">Javier<br><span>Alfonso</span><br>Moreno</h1>
 
     <div class="hero-photo">
-      <img id="heroImage" src="assets/profile.jpg" alt="Javier Alfonso Moreno" width="260" height="260">
+     <img id="heroImage"
+     src="assets/profile.jpg"
+     srcset="assets/profile@2x.jpg 2x, assets/profile@3x.jpg 3x"
+     alt="Javier Alfonso Moreno"
+     width="260" height="260">
     </div>
   </div>
 
@@ -1030,46 +1034,6 @@ footer{
     }, { threshold: 0.08 });
     reveals.forEach(el => observer.observe(el));
   }
-
-  /* ---------- Safe image fallback ---------- */
-  const img = document.getElementById('heroImage');
-  if(img){
-    const alternatives = [
-      // keep these only if you actually need them; Drive links often get blocked
-      "https://drive.google.com/uc?export=view&id=1m4EatmhEMNczeNi7x6BMm-IRbSl7KPhu",
-      "https://drive.google.com/uc?export=download&id=1m4EatmhEMNczeNi7x6BMm-IRbSl7KPhu",
-      "https://via.placeholder.com/360x360/00a3ff/000000?text=Javier"
-    ];
-    let attempt = 0;
-
-    function tryNextOnError(){
-      if(attempt >= alternatives.length){
-        const svg = document.getElementById('fallbackSVG');
-        if(svg){
-          const xml = new XMLSerializer().serializeToString(svg);
-          img.src = "data:image/svg+xml;base64," + btoa(xml);
-          img.style.borderRadius = "50%";
-        }
-        img.removeEventListener('error', tryNextOnError);
-        return;
-      }
-      img.src = alternatives[attempt++];
-    }
-
-    img.addEventListener('error', tryNextOnError);
-
-    img.addEventListener('load', () => {
-      img.style.opacity = "1";
-    });
-
-    // If already cached and loaded, trigger load handler
-    if(img.complete && img.naturalWidth > 0){
-      img.dispatchEvent(new Event('load'));
-    }
-  }
-})();
-</script>
-
   /* ============================
      CUSTOM CURSOR
   ============================ */
