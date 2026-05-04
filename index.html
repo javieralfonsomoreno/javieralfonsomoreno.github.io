@@ -984,43 +984,85 @@ footer{
     <rect x="30" y="110" width="120" height="36" rx="6" fill="#00a3ff"/>
   </svg>
 
-  <!-- Scripts -->
-  <script>
-    /* Cursor */
-    (function(){
-      const cursor = document.getElementById('cursor');
-      const ring = document.getElementById('cursorRing');
-      let mx = 0, my = 0, rx = 0, ry = 0;
-
-      document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
-
-      function animCursor(){
-        if(!cursor || !ring) return;
-        cursor.style.transform = `translate(${mx - 6}px, ${my - 6}px)`;
-        rx += (mx - rx) * 0.12;
-        ry += (my - ry) * 0.12;
-        ring.style.transform = `translate(${rx - 20}px, ${ry - 20}px)`;
-        requestAnimationFrame(animCursor);
-      }
-      animCursor();
-    })();
-
-    /* Scroll reveal */
-    (function(){
-      const reveals = document.querySelectorAll('.reveal');
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry, i) => {
-          if(entry.isIntersecting){
-            setTimeout(() => entry.target.classList.add('visible'), i * 80);
-            observer.unobserve(entry.target);
-          }
-        });
-      }, { threshold: 0.08 });
-      reveals.forEach(el => observer.observe(el));
-    })();
-  </script>
-<!-- Scripts -->
+  <!-- Consolidated scripts: cursor, reveal, and safe image fallback -->
 <script>
+(function(){
+  /* ---------- Cursor ---------- */
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+
+  document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+
+  function animCursor(){
+    if(!cursor || !ring) return;
+    cursor.style.transform = `translate(${mx - 6}px, ${my - 6}px)`;
+    rx += (mx - rx) * 0.12;
+    ry += (my - ry) * 0.12;
+    ring.style.transform = `translate(${rx - 20}px, ${ry - 20}px)`;
+    requestAnimationFrame(animCursor);
+  }
+  animCursor();
+
+  // Hover effect (scale) for interactive elements
+  document.querySelectorAll('a, button').forEach(el => {
+    el.addEventListener('mouseenter', () => cursor && (cursor.style.transform += ' scale(2)'));
+    el.addEventListener('mouseleave', () => cursor && (cursor.style.transform = `translate(${mx - 6}px, ${my - 6}px)`));
+  });
+
+  /* ---------- Scroll reveal ---------- */
+  const reveals = document.querySelectorAll('.reveal');
+  if(reveals.length){
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, i) => {
+        if(entry.isIntersecting){
+          setTimeout(() => entry.target.classList.add('visible'), i * 80);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.08 });
+    reveals.forEach(el => observer.observe(el));
+  }
+
+  /* ---------- Safe image fallback ---------- */
+  const img = document.getElementById('heroImage');
+  if(img){
+    const alternatives = [
+      // keep these only if you actually need them; Drive links often get blocked
+      "https://drive.google.com/uc?export=view&id=1m4EatmhEMNczeNi7x6BMm-IRbSl7KPhu",
+      "https://drive.google.com/uc?export=download&id=1m4EatmhEMNczeNi7x6BMm-IRbSl7KPhu",
+      "https://via.placeholder.com/360x360/00a3ff/000000?text=Javier"
+    ];
+    let attempt = 0;
+
+    function tryNextOnError(){
+      if(attempt >= alternatives.length){
+        const svg = document.getElementById('fallbackSVG');
+        if(svg){
+          const xml = new XMLSerializer().serializeToString(svg);
+          img.src = "data:image/svg+xml;base64," + btoa(xml);
+          img.style.borderRadius = "50%";
+        }
+        img.removeEventListener('error', tryNextOnError);
+        return;
+      }
+      img.src = alternatives[attempt++];
+    }
+
+    img.addEventListener('error', tryNextOnError);
+
+    img.addEventListener('load', () => {
+      img.style.opacity = "1";
+    });
+
+    // If already cached and loaded, trigger load handler
+    if(img.complete && img.naturalWidth > 0){
+      img.dispatchEvent(new Event('load'));
+    }
+  }
+})();
+</script>
+
   /* ============================
      CUSTOM CURSOR
   ============================ */
