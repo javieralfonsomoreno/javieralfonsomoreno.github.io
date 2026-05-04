@@ -996,6 +996,7 @@ footer{
   </svg>
 
   <!-- Consolidated scripts: cursor, reveal, and safe image fallback -->
+<!-- Consolidated scripts: cursor, reveal, and safe image fallback -->
 <script>
 (function(){
   /* ---------- Cursor ---------- */
@@ -1017,8 +1018,12 @@ footer{
 
   // Hover effect (scale) for interactive elements
   document.querySelectorAll('a, button').forEach(el => {
-    el.addEventListener('mouseenter', () => cursor && (cursor.style.transform += ' scale(2)'));
-    el.addEventListener('mouseleave', () => cursor && (cursor.style.transform = `translate(${mx - 6}px, ${my - 6}px)`));
+    el.addEventListener('mouseenter', () => {
+      if(cursor) cursor.style.transform += ' scale(2)';
+    });
+    el.addEventListener('mouseleave', () => {
+      if(cursor) cursor.style.transform = `translate(${mx - 6}px, ${my - 6}px)`;
+    });
   });
 
   /* ---------- Scroll reveal ---------- */
@@ -1034,6 +1039,46 @@ footer{
     }, { threshold: 0.08 });
     reveals.forEach(el => observer.observe(el));
   }
+
+  /* ---------- Safe image fallback (only on real errors) ---------- */
+  const img = document.getElementById('heroImage');
+  if(img){
+    const alternatives = [
+      // Keep Drive links only if you actually need them; they often get blocked.
+      "https://drive.google.com/uc?export=view&id=1m4EatmhEMNczeNi7x6BMm-IRbSl7KPhu",
+      "https://drive.google.com/uc?export=download&id=1m4EatmhEMNczeNi7x6BMm-IRbSl7KPhu",
+      "https://via.placeholder.com/360x360/00a3ff/000000?text=Javier"
+    ];
+    let attempt = 0;
+
+    function tryNextOnError(){
+      if(attempt >= alternatives.length){
+        const svg = document.getElementById('fallbackSVG');
+        if(svg){
+          const xml = new XMLSerializer().serializeToString(svg);
+          img.src = "data:image/svg+xml;base64," + btoa(xml);
+          img.style.borderRadius = "50%";
+        }
+        img.removeEventListener('error', tryNextOnError);
+        return;
+      }
+      img.src = alternatives[attempt++];
+    }
+
+    img.addEventListener('error', tryNextOnError);
+
+    img.addEventListener('load', () => {
+      img.style.opacity = "1";
+    });
+
+    // If already cached and loaded, trigger load handler
+    if(img.complete && img.naturalWidth > 0){
+      img.dispatchEvent(new Event('load'));
+    }
+  }
+})();
+</script>
+
   /* ============================
      CUSTOM CURSOR
   ============================ */
