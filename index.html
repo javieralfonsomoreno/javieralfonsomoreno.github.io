@@ -1,339 +1,361 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="es">
 <head>
   <meta charset="utf-8" />
-  <title>Javier Alfonso Moreno | Marketing Portfolio</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Javier Alfonso Moreno — Portfolio & CV</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="description" content="Javier Alfonso Moreno — Senior Marketing Manager. Portfolio, experiencia, proyectos y contacto." />
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
 
-  <!-- Styles -->
   <style>
-    :root {
-      --bg: #0a0a0a;
-      --fg: #ffffff;
-      --accent: #00a3ff;
+    :root{
+      --bg:#0a0a0a;
+      --fg:#ffffff;
+      --muted:rgba(255,255,255,0.72);
+      --accent:#00a3ff;
+      --card: rgba(255,255,255,0.03);
+      --glass: rgba(255,255,255,0.04);
       --font-body: 'Inter', sans-serif;
       --font-display: 'Space Grotesk', sans-serif;
     }
-
-    body {
-      margin: 0;
-      padding: 0;
-      background: var(--bg);
-      color: var(--fg);
-      font-family: var(--font-body);
-      -webkit-font-smoothing: antialiased;
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:var(--font-body);
+      background:var(--bg);
+      color:var(--fg);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      line-height:1.45;
     }
+    a{color:var(--accent); text-decoration:none}
+    header{padding:64px 6vw 28px}
+    .container{max-width:1100px;margin:0 auto;padding:0 20px}
 
-    header {
-      padding: 80px 8vw 40px;
-    }
+    /* HERO */
+    .hero-head{display:flex;align-items:flex-start;gap:28px;flex-wrap:wrap}
+    .hero-name{font-family:var(--font-display);font-size:clamp(48px,8vw,96px);line-height:0.92;margin:0}
+    .hero-name span{color:var(--accent)}
+    .hero-photo{width:260px;height:260px;flex:0 0 auto;margin-top:-18px}
+    .hero-photo img{width:100%;height:100%;object-fit:cover;border-radius:50%;border:4px solid var(--accent);box-shadow:0 18px 48px rgba(0,163,255,0.14);opacity:0;transition:opacity .28s ease}
 
-    .header-eyebrow {
-      font-size: 14px;
-      opacity: 0.6;
-      margin-bottom: 12px;
-      letter-spacing: 0.5px;
-    }
+    .hero-meta{margin-top:18px;color:var(--muted);font-size:18px}
+    .hero-buttons{margin-top:22px;display:flex;gap:12px;flex-wrap:wrap}
+    .btn{display:inline-block;padding:10px 18px;border-radius:8px;border:1px solid var(--accent);color:var(--accent);font-weight:600}
+    .btn:hover{background:var(--accent);color:#000}
 
-    /* HERO HEAD: name + image */
-    .hero-head {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      gap: 32px;
-      flex-wrap: wrap;
-    }
+    .hero-rule{height:1px;background:rgba(255,255,255,0.06);margin:36px 0}
 
-    .hero-name {
-      font-family: var(--font-display);
-      font-size: clamp(56px, 10vw, 120px);
-      line-height: 0.9;
-      margin: 0;
-    }
+    /* LAYOUT */
+    .two-col{display:grid;grid-template-columns:1fr 320px;gap:32px;align-items:start}
+    @media (max-width:980px){ .two-col{grid-template-columns:1fr} .hero-photo{margin-top:0} }
 
-    .hero-name span {
-      color: var(--accent);
-    }
+    /* CV CONTENT */
+    section{padding:28px 0}
+    .card{background:var(--card);padding:18px;border-radius:12px}
+    h2{font-family:var(--font-display);margin:0 0 12px;font-size:20px}
+    .muted{color:var(--muted);font-size:14px}
 
-    .hero-photo {
-      width: 260px;
-      height: 260px;
-      flex: 0 0 auto;
-      margin-top: -20px; /* raises image higher */
-    }
+    /* EXPERIENCE */
+    .exp-item{margin-bottom:18px}
+    .exp-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start}
+    .exp-role{font-weight:700}
+    .exp-company{color:var(--accent);font-weight:600}
+    .exp-dates{color:var(--muted);font-size:13px}
+    .exp-desc{margin-top:8px;color:var(--muted);font-size:15px}
 
-    .hero-photo img {
-      width: 100%;
-      height: 100%;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 4px solid var(--accent);
-      box-shadow: 0 18px 48px rgba(0,163,255,0.18);
-      opacity: 0;
-      transition: opacity .3s ease;
-    }
+    /* SKILLS */
+    .skills{display:flex;flex-wrap:wrap;gap:8px}
+    .skill{background:var(--glass);padding:8px 10px;border-radius:8px;font-size:14px;color:var(--muted)}
 
-    .hero-rule {
-      margin: 40px 0;
-      height: 1px;
-      background: rgba(255,255,255,0.1);
-    }
+    /* PROJECTS */
+    .project{display:flex;gap:12px;align-items:flex-start;margin-bottom:14px}
+    .project-thumb{width:84px;height:64px;background:rgba(255,255,255,0.03);border-radius:8px;flex:0 0 auto}
+    .project-body{flex:1}
+    .project-title{font-weight:700}
+    .project-desc{color:var(--muted);font-size:14px;margin-top:6px}
 
-    /* HERO BOTTOM */
-    .hero-bottom {
-      display: flex;
-      justify-content: space-between;
-      gap: 40px;
-      flex-wrap: wrap;
-    }
-
-    .hero-left {
-      max-width: 600px;
-    }
-
-    .hero-role {
-      font-size: 22px;
-      opacity: 0.8;
-      margin-bottom: 12px;
-    }
-
-    .hero-tagline {
-      font-size: 28px;
-      line-height: 1.3;
-      opacity: 0.9;
-      margin-bottom: 24px;
-    }
-
-    .hero-buttons {
-      display: flex;
-      gap: 16px;
-      flex-wrap: wrap;
-    }
-
-    .btn {
-      padding: 12px 22px;
-      border-radius: 8px;
-      font-size: 16px;
-      font-weight: 600;
-      text-decoration: none;
-      border: 1px solid var(--accent);
-      color: var(--accent);
-      transition: 0.2s ease;
-    }
-
-    .btn:hover {
-      background: var(--accent);
-      color: #000;
-    }
+    /* CONTACT */
+    .contact-list{display:flex;flex-direction:column;gap:8px}
+    .contact-item{color:var(--muted);font-size:15px}
 
     /* STATS BAR */
-    .stats-bar {
-      display: flex;
-      justify-content: space-between;
-      padding: 40px 8vw;
-      gap: 24px;
-      flex-wrap: wrap;
-    }
-
-    .stat-item {
-      text-align: center;
-      flex: 1;
-      min-width: 120px;
-    }
-
-    .stat-num {
-      font-size: 32px;
-      font-weight: 700;
-      color: var(--accent);
-    }
-
-    .stat-label {
-      font-size: 14px;
-      opacity: 0.7;
-    }
+    .stats{display:flex;gap:18px;flex-wrap:wrap;margin-top:18px}
+    .stat{background:transparent;padding:12px;border-radius:10px;text-align:center;min-width:120px}
+    .stat-num{font-weight:700;color:var(--accent);font-size:20px}
+    .stat-label{color:var(--muted);font-size:13px}
 
     /* MARQUEE */
-    .marquee-wrap {
-      overflow: hidden;
-      white-space: nowrap;
-      padding: 20px 0;
-      border-top: 1px solid rgba(255,255,255,0.1);
-      border-bottom: 1px solid rgba(255,255,255,0.1);
-    }
+    .marquee{overflow:hidden;border-top:1px solid rgba(255,255,255,0.04);border-bottom:1px solid rgba(255,255,255,0.04);padding:14px 0;margin-top:18px}
+    .marquee-inner{display:flex;gap:40px;animation:marq 18s linear infinite}
+    @keyframes marq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 
-    .marquee-inner {
-      display: flex;
-      animation: marquee 18s linear infinite;
-    }
+    /* reveal helper */
+    .reveal{opacity:0;transform:translateY(18px);transition:all .6s ease}
+    .reveal.visible{opacity:1;transform:none}
 
-    .marquee-text {
-      font-size: 20px;
-      padding-right: 60px;
-      opacity: 0.8;
-    }
-
-    @keyframes marquee {
-      from { transform: translateX(0); }
-      to { transform: translateX(-50%); }
-    }
-
-    /* REVEAL */
-    .reveal {
-      opacity: 0;
-      transform: translateY(20px);
-      transition: 0.6s ease;
-    }
-
-    .reveal.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    /* CUSTOM CURSOR */
-    #cursor, #cursorRing {
-      position: fixed;
-      top: 0; left: 0;
-      pointer-events: none;
-      z-index: 9999;
-    }
-
-    #cursor {
-      width: 12px;
-      height: 12px;
-      background: var(--accent);
-      border-radius: 50%;
-      transform: translate(-50%, -50%);
-      transition: transform .12s ease;
-    }
-
-    #cursor.cursor--hover {
-      transform: scale(2);
-    }
-
-    #cursorRing {
-      width: 40px;
-      height: 40px;
-      border: 2px solid var(--accent);
-      border-radius: 50%;
-      opacity: 0.4;
-      transform: translate(-50%, -50%);
-      transition: transform .18s ease;
-    }
+    /* cursor (minimal) */
+    #cursor,#cursorRing{position:fixed;top:0;left:0;pointer-events:none;z-index:9999}
+    #cursor{width:10px;height:10px;background:var(--accent);border-radius:50%;transform:translate(-50%,-50%);transition:transform .12s ease}
+    #cursor.cursor--hover{transform:scale(2)}
+    #cursorRing{width:36px;height:36px;border-radius:50%;border:2px solid var(--accent);opacity:.36;transform:translate(-50%,-50%);transition:transform .18s ease}
   </style>
 </head>
-
 <body>
+  <!-- custom cursor elements -->
+  <div id="cursor" aria-hidden="true"></div>
+  <div id="cursorRing" aria-hidden="true"></div>
 
-  <!-- Custom Cursor -->
-  <div id="cursor"></div>
-  <div id="cursorRing"></div>
+  <main class="container">
+    <header>
+      <div class="hero-head">
+        <div>
+          <h1 class="hero-name">Javier<br><span>Alfonso</span><br>Moreno</h1>
+          <div class="hero-meta muted">Senior Marketing Manager · Especializado en Running & Training · EMEA</div>
 
-  <!-- HEADER -->
-  <header>
-    <div class="header-eyebrow">Marketing Portfolio · 2026</div>
+          <div class="hero-buttons">
+            <a class="btn" href="#work">Ver trabajo</a>
+            <a class="btn" href="#contact">Contacto</a>
+            <a class="btn" href="assets/Javier_CV.pdf" download>Descargar CV</a>
+          </div>
 
-    <div class="hero-head">
-      <h1 class="hero-name">Javier<br><span>Alfonso</span><br>Moreno</h1>
+          <div class="stats" style="margin-top:18px">
+            <div class="stat">
+              <div class="stat-num">1B+</div>
+              <div class="stat-label">Impresiones · Go Wild 2025</div>
+            </div>
+            <div class="stat">
+              <div class="stat-num">€10M</div>
+              <div class="stat-label">Budget managed · EMEA</div>
+            </div>
+            <div class="stat">
+              <div class="stat-num">50%</div>
+              <div class="stat-label">Sell-through · 4 weeks</div>
+            </div>
+          </div>
+        </div>
 
-      <div class="hero-photo">
-        <img id="heroImage" src="assets/profile.jpg" alt="Javier Alfonso Moreno">
-      </div>
-    </div>
-
-    <div class="hero-rule"></div>
-
-    <div class="hero-bottom">
-      <div class="hero-left">
-        <div class="hero-role">Senior Marketing Manager · PUMA EMEA</div>
-        <div class="hero-tagline">Driving Running & Training category growth through storytelling, creator networks, and full‑funnel brand experiences.</div>
-
-        <div class="hero-buttons">
-          <a class="btn" href="#work">View Work</a>
-          <a class="btn" href="mailto:javier.alfonso.moreno@gmail.com">Contact</a>
+        <div class="hero-photo">
+          <!-- Usa la imagen que ya subiste a assets/profile.jpg -->
+          <img id="heroImage" src="assets/profile.jpg" alt="Javier Alfonso Moreno" width="260" height="260">
         </div>
       </div>
-    </div>
-  </header>
 
-  <!-- STATS -->
-  <div class="stats-bar">
-    <div class="stat-item">
-      <div class="stat-num">1B+</div>
-      <div class="stat-label">Impressions · Go Wild 2025</div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-num">€10M</div>
-      <div class="stat-label">Budget managed · EMEA</div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-num">0→3%</div>
-      <div class="stat-label">Market share · Running EU</div>
-    </div>
-    <div class="stat-item">
-      <div class="stat-num">50%</div>
-      <div class="stat-label">Sell-through · 4 weeks</div>
-    </div>
-  </div>
+      <div class="hero-rule" style="margin-top:28px"></div>
+    </header>
 
-  <!-- MARQUEE -->
-  <div class="marquee-wrap">
-    <div class="marquee-inner">
-      <div class="marquee-text">Running · Training · EMEA Campaigns · GTM Strategy · Influencer Activation · Experiential Marketing · Partner Activation · Full-Funnel</div>
-      <div class="marquee-text">Running · Training · EMEA Campaigns · GTM Strategy · Influencer Activation · Experiential Marketing · Partner Activation · Full-Funnel</div>
-    </div>
-  </div>
+    <div class="two-col">
+      <!-- LEFT: CV content -->
+      <div>
+        <!-- ABOUT -->
+        <section id="about" class="reveal">
+          <div class="card">
+            <h2>Sobre mí</h2>
+            <p class="muted" style="margin-top:8px">
+              Soy un profesional del marketing con experiencia en estrategia GTM, campañas EMEA, activaciones con creadores y gestión de presupuestos a gran escala. Me especializo en crecimiento de categoría para Running y Training.
+            </p>
+          </div>
+        </section>
 
-  <!-- CONSOLIDATED SCRIPT -->
+        <!-- EXPERIENCE -->
+        <section id="experience" class="reveal" style="margin-top:18px">
+          <h2>Experiencia</h2>
+
+          <div class="exp-item card" style="margin-top:12px">
+            <div class="exp-head">
+              <div>
+                <div class="exp-role">Senior Marketing Manager</div>
+                <div class="exp-company">PUMA · EMEA</div>
+              </div>
+              <div class="exp-dates">2022 — Presente</div>
+            </div>
+            <div class="exp-desc">
+              Lideré la estrategia de categoría Running & Training en EMEA; gestioné campañas full‑funnel, activaciones con creadores y un presupuesto anual de €10M. Resultado: +3% share en 12 meses.
+            </div>
+          </div>
+
+          <div class="exp-item card" style="margin-top:12px">
+            <div class="exp-head">
+              <div>
+                <div class="exp-role">Marketing Manager</div>
+                <div class="exp-company">Agencia / Cliente anterior</div>
+              </div>
+              <div class="exp-dates">2018 — 2022</div>
+            </div>
+            <div class="exp-desc">
+              Gestión de campañas digitales y activaciones presenciales; coordinación con equipos creativos y de medios; optimización de performance y reporting.
+            </div>
+          </div>
+
+        </section>
+
+        <!-- EDUCATION -->
+        <section id="education" class="reveal" style="margin-top:18px">
+          <h2>Formación</h2>
+          <div class="card" style="margin-top:12px">
+            <div style="display:flex;justify-content:space-between;align-items:center">
+              <div>
+                <div style="font-weight:700">Máster en Marketing</div>
+                <div class="muted">Universidad Ejemplo</div>
+              </div>
+              <div class="muted">2016 — 2017</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- SKILLS -->
+        <section id="skills" class="reveal" style="margin-top:18px">
+          <h2>Skills</h2>
+          <div class="card" style="margin-top:12px">
+            <div class="skills">
+              <div class="skill">Estrategia GTM</div>
+              <div class="skill">Paid Social</div>
+              <div class="skill">Influencer Marketing</div>
+              <div class="skill">Experiential</div>
+              <div class="skill">Analytics & BI</div>
+              <div class="skill">Project Management</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- WORK / PROJECTS -->
+        <section id="work" class="reveal" style="margin-top:18px">
+          <h2>Proyectos destacados</h2>
+
+          <div class="card" style="margin-top:12px">
+            <div class="project">
+              <div class="project-thumb" aria-hidden="true"></div>
+              <div class="project-body">
+                <div class="project-title">Go Wild 2025 — Campaña EMEA</div>
+                <div class="project-desc">Campaña integrada con influencers y activaciones locales; 1B+ impresiones; incremento de awareness y ventas.</div>
+              </div>
+            </div>
+
+            <div class="project">
+              <div class="project-thumb" aria-hidden="true"></div>
+              <div class="project-body">
+                <div class="project-title">Lanzamiento producto X</div>
+                <div class="project-desc">Estrategia de lanzamiento, partnerships y retail activation; aumento de sell-through 50% en 4 semanas.</div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ADDITIONAL: publications, talks, awards -->
+        <section id="more" class="reveal" style="margin-top:18px">
+          <h2>Otros</h2>
+          <div class="card" style="margin-top:12px">
+            <p class="muted">Pon aquí premios, charlas, certificaciones o enlaces a artículos.</p>
+          </div>
+        </section>
+
+        <!-- CV embedded (PDF) -->
+        <section id="cv" class="reveal" style="margin-top:18px">
+          <h2>Currículum</h2>
+          <p class="muted" style="margin-top:8px">
+            Descarga la versión en PDF:
+            <a class="btn" href="assets/Javier_CV.pdf" download>Descargar CV (PDF)</a>
+          </p>
+          <div style="margin-top:12px">
+            <iframe src="assets/Javier_CV.pdf" width="100%" height="520" style="border:1px solid rgba(255,255,255,0.06);border-radius:8px;">
+              Tu navegador no soporta iframes. Descarga el CV <a href="assets/Javier_CV.pdf">aquí</a>.
+            </iframe>
+          </div>
+        </section>
+      </div>
+
+      <!-- RIGHT: sidebar (contact, quick CV, download) -->
+      <aside>
+        <section id="contact" class="reveal card">
+          <h2>Contacto</h2>
+          <div class="contact-list" style="margin-top:10px">
+            <div class="contact-item"><strong>Email</strong><br><a href="mailto:javier.alfonso.moreno@gmail.com">javier.alfonso.moreno@gmail.com</a></div>
+            <div class="contact-item"><strong>LinkedIn</strong><br><a href="https://www.linkedin.com/in/javieralfonsomoreno" target="_blank" rel="noopener">linkedin.com/in/javieralfonsomoreno</a></div>
+            <div class="contact-item"><strong>Ubicación</strong><br>Madrid, España</div>
+          </div>
+        </section>
+
+        <section class="reveal card" style="margin-top:18px">
+          <h2>Resumen rápido</h2>
+          <p class="muted" style="margin-top:8px">
+            Senior Marketing Manager · Experiencia en EMEA · Especialidad en Running & Training · Gestión de presupuestos y equipos.
+          </p>
+        </section>
+
+        <section class="reveal card" style="margin-top:18px">
+          <h2>Descargar</h2>
+          <p class="muted" style="margin-top:8px">Descarga una versión PDF de tu CV.</p>
+          <a class="btn" href="assets/Javier_CV.pdf" download>Descargar CV</a>
+        </section>
+      </aside>
+    </div>
+
+    <!-- MARQUEE -->
+    <div class="marquee reveal" style="margin-top:28px">
+      <div class="marquee-inner">
+        <div>Running · Training · EMEA Campaigns · GTM Strategy · Influencer Activation · Experiential Marketing · Partner Activation · Full-Funnel</div>
+        <div>Running · Training · EMEA Campaigns · GTM Strategy · Influencer Activation · Experiential Marketing · Partner Activation · Full-Funnel</div>
+      </div>
+    </div>
+
+    <footer style="padding:36px 0 80px;color:var(--muted);font-size:14px">
+      <div class="container" style="max-width:1100px">
+        © <strong>Javier Alfonso Moreno</strong> · <span class="muted">Marketing Portfolio</span>
+      </div>
+    </footer>
+  </main>
+
+  <!-- Consolidated script: cursor, reveal, hero image load -->
   <script>
     (function(){
+      'use strict';
+
       /* Cursor */
       const cursor = document.getElementById('cursor');
       const ring = document.getElementById('cursorRing');
-      let mx=0,my=0,rx=0,ry=0;
-
-      document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;});
-
-      function loop(){
-        cursor.style.transform=`translate(${mx-6}px,${my-6}px)`;
-        rx+=(mx-rx)*0.12;
-        ry+=(my-ry)*0.12;
-        ring.style.transform=`translate(${rx-20}px,${ry-20}px)`;
-        requestAnimationFrame(loop);
+      if(cursor && ring){
+        let mx=0,my=0,rx=0,ry=0;
+        document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; }, {passive:true});
+        function anim(){
+          cursor.style.transform = `translate(${mx - 6}px, ${my - 6}px)`;
+          rx += (mx - rx) * 0.12;
+          ry += (my - ry) * 0.12;
+          ring.style.transform = `translate(${rx - 20}px, ${ry - 20}px)`;
+          requestAnimationFrame(anim);
+        }
+        anim();
+        document.querySelectorAll('a,button').forEach(el=>{
+          el.addEventListener('mouseenter', ()=> cursor.classList.add('cursor--hover'));
+          el.addEventListener('mouseleave', ()=> cursor.classList.remove('cursor--hover'));
+        });
       }
-      loop();
-
-      document.querySelectorAll('a,button').forEach(el=>{
-        el.addEventListener('mouseenter',()=>cursor.classList.add('cursor--hover'));
-        el.addEventListener('mouseleave',()=>cursor.classList.remove('cursor--hover'));
-      });
 
       /* Reveal */
-      const reveals=document.querySelectorAll('.reveal');
-      const obs=new IntersectionObserver((entries)=>{
-        entries.forEach((entry,i)=>{
-          if(entry.isIntersecting){
-            setTimeout(()=>entry.target.classList.add('visible'),i*80);
-            obs.unobserve(entry.target);
-          }
-        });
-      },{threshold:0.08});
-      reveals.forEach(el=>obs.observe(el));
+      const reveals = document.querySelectorAll('.reveal');
+      if(reveals.length){
+        const obs = new IntersectionObserver((entries) => {
+          entries.forEach((entry, i) => {
+            if(entry.isIntersecting){
+              setTimeout(()=> entry.target.classList.add('visible'), i * 70);
+              obs.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.08 });
+        reveals.forEach(r => obs.observe(r));
+      }
 
-      /* Hero image */
-      const img=document.getElementById('heroImage');
+      /* Hero image: ensure visible when loaded */
+      const img = document.getElementById('heroImage');
       if(img){
-        img.addEventListener('load',()=>{img.style.opacity='1';});
-        if(img.complete && img.naturalWidth>0){
-          img.dispatchEvent(new Event('load'));
-        }
+        img.addEventListener('load', ()=> { img.style.opacity = '1'; });
+        if(img.complete && img.naturalWidth > 0) img.dispatchEvent(new Event('load'));
       }
     })();
   </script>
-
 </body>
 </html>
