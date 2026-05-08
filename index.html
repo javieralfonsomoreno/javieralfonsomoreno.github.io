@@ -8,1166 +8,332 @@
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
- <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;700;900&family=Barlow:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
 
-  <!-- Favicon -->
-  <link rel="icon" type="image/png" href="assets/favicon.png">
-
-  <!-- Main Styles -->
+  <!-- Styles -->
   <style>
- :root{
-  --bg:#050508;
-  --surface:#0c0c12;
-  --border:#1a1a26;
-  --accent:#00a3ff;
-  --text:#ffffff;
-  --muted:#c3c9d4;
-  --faint:#2a2a36;
+    :root {
+      --bg: #0a0a0a;
+      --fg: #ffffff;
+      --accent: #00a3ff;
+      --font-body: 'Inter', sans-serif;
+      --font-display: 'Space Grotesk', sans-serif;
+    }
 
-  --font-display:'Barlow Condensed', sans-serif;
-  --font-body:'Barlow', sans-serif;
-  --font-mono:'DM Mono', monospace;
-}
+    body {
+      margin: 0;
+      padding: 0;
+      background: var(--bg);
+      color: var(--fg);
+      font-family: var(--font-body);
+      -webkit-font-smoothing: antialiased;
+    }
 
-/* Reset */
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-body{
-  font-family:var(--font-body);
-  background:var(--bg);
-  color:var(--text);
-  line-height:1.6;
-  overflow-x:hidden;
-  -webkit-font-smoothing:antialiased;
-  -moz-osx-font-smoothing:grayscale;
-}
+    header {
+      padding: 80px 8vw 40px;
+    }
 
-/* Cursor */
-.cursor{
-  position:fixed;top:0;left:0;
-  width:12px;height:12px;
-  background:var(--accent);
-  border-radius:50%;
-  pointer-events:none;
-  z-index:9999;
-  transition:transform .12s ease,opacity .2s;
-  mix-blend-mode:difference;
-}
-.cursor-ring{
-  position:fixed;top:0;left:0;
-  width:40px;height:40px;
-  border:1px solid rgba(0,163,255,.35);
-  border-radius:50%;
-  pointer-events:none;
-  z-index:9998;
-  transition:transform .22s ease;
-  mix-blend-mode:difference;
-}
+    .header-eyebrow {
+      font-size: 14px;
+      opacity: 0.6;
+      margin-bottom: 12px;
+      letter-spacing: 0.5px;
+    }
 
-/* Noise overlay */
-body::before{
-  content:'';
-  position:fixed;inset:0;
-  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
-  pointer-events:none;
-  z-index:0;
-  opacity:.6;
-}
+    /* HERO HEAD: name + image */
+    .hero-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 32px;
+      flex-wrap: wrap;
+    }
 
-/* Scrollbar */
-::-webkit-scrollbar{width:3px}
-::-webkit-scrollbar-track{background:var(--bg)}
-::-webkit-scrollbar-thumb{background:var(--accent);border-radius:99px}
+    .hero-name {
+      font-family: var(--font-display);
+      font-size: clamp(56px, 10vw, 120px);
+      line-height: 0.9;
+      margin: 0;
+    }
 
-.page{
-  max-width:1200px;
-  margin:0 auto;
-  padding:0 28px 80px;
-  position:relative;
-  z-index:1;
-}
+    .hero-name span {
+      color: var(--accent);
+    }
 
-/* Header / Hero */
-header{padding-top:56px;padding-bottom:40px;position:relative}
-.header-eyebrow{
-  font-family:var(--font-mono);
-  font-size:10px;
-  letter-spacing:.22em;
-  text-transform:uppercase;
-  color:var(--accent);
-  margin-bottom:10px;
-  opacity:0;
-  animation:fadeUp .6s .1s forwards;
-}
-.hero-name{
-  font-family:var(--font-display);
-  font-size:clamp(72px,12vw,148px);
-  font-weight:900;
-  line-height:.88;
-  text-transform:uppercase;
-  letter-spacing:-.01em;
-  color:var(--text);
-  opacity:0;
-  animation:fadeUp .7s .2s forwards;
-}
-.hero-name span{color:var(--accent);display:inline-block}
-.hero-rule{
-  width:100%;height:1px;
-  background:linear-gradient(90deg,var(--accent) 0%,transparent 60%);
-  margin:20px 0 24px;
-  opacity:0;
-  animation:fadeIn .6s .4s forwards;
-}
+    .hero-photo {
+      width: 260px;
+      height: 260px;
+      flex: 0 0 auto;
+      margin-top: -20px; /* raises image higher */
+    }
 
-/* Hero head: name + image side-by-side */
-.hero-head{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:28px;
-  margin-bottom:18px;
-}
+    .hero-photo img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 4px solid var(--accent);
+      box-shadow: 0 18px 48px rgba(0,163,255,0.18);
+      opacity: 0;
+      transition: opacity .3s ease;
+    }
 
-.hero-name{
-  flex:1;
-  font-family:var(--font-display);
-  font-size:clamp(56px,10vw,120px);
-  line-height:0.92;
-  margin:0;
-}
+    .hero-rule {
+      margin: 40px 0;
+      height: 1px;
+      background: rgba(255,255,255,0.1);
+    }
 
-.hero-photo{
-  flex:0 0 auto;
-  width:260px;
-  height:260px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  margin-left:18px;
-}
+    /* HERO BOTTOM */
+    .hero-bottom {
+      display: flex;
+      justify-content: space-between;
+      gap: 40px;
+      flex-wrap: wrap;
+    }
 
-.hero-photo img{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  border-radius:50%;
-  border:4px solid var(--accent);
-  box-shadow:0 18px 48px rgba(0,163,255,.18);
-}
+    .hero-left {
+      max-width: 600px;
+    }
 
-/* smaller screens */
-@media (max-width:860px){
-  .hero-head{flex-direction:column;align-items:flex-start;gap:12px}
-  .hero-photo{width:180px;height:180px;margin-left:0}
-  .hero-name{font-size:56px}
-}
-@media (max-width:520px){
-  .hero-photo{width:140px;height:140px}
-  .hero-name{font-size:44px}
-}
+    .hero-role {
+      font-size: 22px;
+      opacity: 0.8;
+      margin-bottom: 12px;
+    }
 
+    .hero-tagline {
+      font-size: 28px;
+      line-height: 1.3;
+      opacity: 0.9;
+      margin-bottom: 24px;
+    }
 
+    .hero-buttons {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
 
-.hero-role{
-  font-family:var(--font-display);
-  font-size:clamp(18px,2.5vw,26px);
-  font-weight:300;
-  letter-spacing:.12em;
-  text-transform:uppercase;
-  color:var(--muted);
-}
-.hero-tagline{
-  font-size:14px;
-  color:var(--muted);
-  max-width:380px;
-  line-height:1.7;
-}
-.hero-actions{display:flex;gap:10px;margin-top:6px}
+    .btn {
+      padding: 12px 22px;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      text-decoration: none;
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      transition: 0.2s ease;
+    }
 
-.btn{
-  font-family:var(--font-mono);
-  font-size:10px;
-  text-transform:uppercase;
-  letter-spacing:.18em;
-  padding:10px 18px;
-  border-radius:2px;
-  border:1px solid var(--border);
-  background:transparent;
-  color:var(--text);
-  transition:all .18s;
-}
-.btn-primary{
-  background:var(--accent);
-  border-color:var(--accent);
-  color:#000;
-  font-weight:500;
-}
-.btn-primary:hover{
-  filter:brightness(1.08);
-  transform:translateY(-2px);
-  box-shadow:0 12px 28px rgba(0,163,255,.25);
-}
-.btn-outline:hover{
-  border-color:var(--accent);
-  color:var(--accent);
-  transform:translateY(-2px);
-}
+    .btn:hover {
+      background: var(--accent);
+      color: #000;
+    }
 
-/* Stats */
-.stats-bar{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  border:1px solid var(--border);
-  border-radius:4px;
-  margin-bottom:40px;
-  overflow:hidden;
-  opacity:0;
-  animation:fadeUp .6s .7s forwards;
-}
-.stat-item{
-  padding:20px 22px;
-  border-right:1px solid var(--border);
-  transition:background .2s;
-}
-.stat-item:last-child{border-right:none}
-.stat-item:hover{background:var(--surface)}
-.stat-num{
-  font-family:var(--font-display);
-  font-size:clamp(28px,3.5vw,40px);
-  font-weight:900;
-  color:var(--accent);
-  margin-bottom:4px;
-}
-.stat-label{
-  font-family:var(--font-mono);
-  font-size:9px;
-  text-transform:uppercase;
-  letter-spacing:.2em;
-  color:var(--muted);
-}
+    /* STATS BAR */
+    .stats-bar {
+      display: flex;
+      justify-content: space-between;
+      padding: 40px 8vw;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
 
-/* Main grid */
-main{
-  display:grid;
-  grid-template-columns:minmax(0,2.2fr) minmax(0,1fr);
-  gap:28px;
-}
+    .stat-item {
+      text-align: center;
+      flex: 1;
+      min-width: 120px;
+    }
 
-/* Section headers */
-.section-head{
-  display:flex;
-  align-items:center;
-  gap:12px;
-  margin-bottom:14px;
-}
-.section-tag{
-  font-family:var(--font-mono);
-  font-size:9px;
-  letter-spacing:.22em;
-  text-transform:uppercase;
-  color:var(--accent);
-  background:rgba(0,163,255,.07);
-  border:1px solid rgba(0,163,255,.18);
-  padding:3px 8px;
-  border-radius:2px;
-}
-.section-title{
-  font-family:var(--font-display);
-  font-size:22px;
-  font-weight:700;
-  text-transform:uppercase;
-  letter-spacing:.14em;
-  color:var(--text);
-}
+    .stat-num {
+      font-size: 32px;
+      font-weight: 700;
+      color: var(--accent);
+    }
 
-/* Cards */
-.card{
-  background:var(--surface);
-  border:1px solid var(--border);
-  border-radius:6px;
-  padding:20px;
-  margin-bottom:24px;
-  transition:border-color .2s;
-}
-.card:hover{border-color:var(--accent)}
+    .stat-label {
+      font-size: 14px;
+      opacity: 0.7;
+    }
 
-/* About */
-.about-text{
-  font-size:14px;
-  color:var(--muted);
-  line-height:1.85;
-  margin-bottom:16px;
-}
-.about-text strong{color:var(--text);font-weight:500}
-.pill-row{
-  display:flex;
-  flex-wrap:wrap;
-  gap:7px;
-}
-.pill{
-  font-family:var(--font-mono);
-  font-size:9px;
-  text-transform:uppercase;
-  letter-spacing:.16em;
-  padding:5px 10px;
-  border-radius:2px;
-  border:1px solid var(--border);
-  color:var(--muted);
-  transition:all .15s;
-}
-.pill:hover{border-color:var(--accent);color:var(--accent)}
-.pill-hot{
-  border-color:rgba(0,163,255,.3);
-  color:var(--accent);
-  background:rgba(0,163,255,.05);
-}
+    /* MARQUEE */
+    .marquee-wrap {
+      overflow: hidden;
+      white-space: nowrap;
+      padding: 20px 0;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
 
-/* Projects */
-.projects-grid{
-  display:grid;
-  grid-template-columns:repeat(2,1fr);
-  gap:12px;
-}
-.project-card{
-  border:1px solid var(--border);
-  border-radius:6px;
-  padding:16px;
-  background:var(--bg);
-  transition:transform .22s ease,border-color .22s ease,box-shadow .22s ease;
-}
-.project-card:hover{
-  transform:translateY(-4px);
-  border-color:rgba(0,163,255,.25);
-  box-shadow:0 16px 40px rgba(0,0,0,.5);
-}
-.project-tag{
-  font-family:var(--font-mono);
-  font-size:9px;
-  text-transform:uppercase;
-  letter-spacing:.2em;
-  color:var(--muted);
-  margin-bottom:8px;
-}
-.project-title{
-  font-family:var(--font-display);
-  font-size:16px;
-  font-weight:700;
-  text-transform:uppercase;
-  letter-spacing:.08em;
-  margin-bottom:8px;
-  color:var(--text);
-}
-.project-text{
-  font-size:12px;
-  color:var(--muted);
-  line-height:1.7;
-  margin-bottom:10px;
-}
-.project-metric{
-  font-family:var(--font-mono);
-  font-size:10px;
-  color:var(--accent);
-  letter-spacing:.08em;
-  padding-top:10px;
-  border-top:1px solid var(--border);
-}
+    .marquee-inner {
+      display: flex;
+      animation: marquee 18s linear infinite;
+    }
 
-/* Timeline */
-.timeline{position:relative}
-.timeline::before{
-  content:'';
-  position:absolute;
-  left:0;top:6px;bottom:0;
-  width:1px;
-  background:linear-gradient(180deg,var(--accent) 0%,transparent 100%);
-}
-.timeline-item{
-  padding-left:22px;
-  margin-bottom:26px;
-  position:relative;
-}
-.timeline-item::before{
-  content:'';
-  position:absolute;
-  left:-3px;top:6px;
-  width:7px;height:7px;
-  background:var(--accent);
-  border-radius:50%;
-}
-.timeline-date{
-  font-family:var(--font-mono);
-  font-size:9px;
-  letter-spacing:.2em;
-  text-transform:uppercase;
-  color:var(--muted);
-  margin-bottom:4px;
-}
-.timeline-role{
-  font-family:var(--font-display);
-  font-size:17px;
-  font-weight:700;
-  text-transform:uppercase;
-  letter-spacing:.08em;
-  color:var(--text);
-  margin-bottom:2px;
-}
-.timeline-company{
-  font-family:var(--font-mono);
-  font-size:10px;
-  color:var(--accent);
-  letter-spacing:.12em;
-  margin-bottom:10px;
-}
-.timeline-bullets{
-  list-style:none;
-  display:grid;
-  gap:5px;
-}
-.timeline-bullets li{
-  font-size:12px;
-  color:var(--muted);
-  padding-left:14px;
-  position:relative;
-  line-height:1.6;
-}
-.timeline-bullets li::before{
-  content:'→';
-  position:absolute;
-  left:0;
-  color:var(--accent);
-  font-size:10px;
-}
-.timeline-bullets li strong{color:var(--text);font-weight:500}
+    .marquee-text {
+      font-size: 20px;
+      padding-right: 60px;
+      opacity: 0.8;
+    }
 
-/* Sidebar */
-.side-card{
-  background:var(--surface);
-  border:1px solid var(--border);
-  border-radius:6px;
-  padding:18px;
-  margin-bottom:20px;
-}
-.side-title{
-  font-family:var(--font-display);
-  font-size:13px;
-  font-weight:700;
-  text-transform:uppercase;
-  letter-spacing:.18em;
-  color:var(--muted);
-  margin-bottom:14px;
-  padding-bottom:10px;
-  border-bottom:1px solid var(--border);
-}
-.skill-row{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:7px 0;
-  border-bottom:1px solid var(--border);
-}
-.skill-row:last-child{border-bottom:none}
-.skill-name{font-size:11px;color:var(--text)}
-.skill-bar{
-  width:60px;height:2px;
-  background:var(--faint);
-  border-radius:99px;
-  overflow:hidden;
-}
-.skill-fill{
-  height:100%;
-  background:var(--accent);
-  border-radius:99px;
-  transform:scaleX(0);
-  transform-origin:left;
-  animation:fillBar 1s 1s forwards ease-out;
-}
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
 
-.lang-item{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:8px 0;
-  border-bottom:1px solid var(--border);
-  font-size:12px;
-}
-.lang-item:last-child{border-bottom:none}
-.lang-name{color:var(--text)}
-.lang-level{
-  font-family:var(--font-mono);
-  font-size:9px;
-  letter-spacing:.14em;
-  text-transform:uppercase;
-  color:var(--accent);
-}
+    /* REVEAL */
+    .reveal {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: 0.6s ease;
+    }
 
-.edu-item{margin-bottom:14px}
-.edu-item:last-child{margin-bottom:0}
-.edu-degree{
-  font-size:12px;
-  color:var(--text);
-  font-weight:500;
-  margin-bottom:2px;
-}
-.edu-uni{
-  font-family:var(--font-mono);
-  font-size:10px;
-  color:var(--muted);
-  letter-spacing:.06em;
-}
-.edu-year{
-  font-family:var(--font-mono);
-  font-size:9px;
-  color:var(--accent);
-}
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
 
-.contact-row{
-  display:flex;
-  flex-direction:column;
-  gap:10px;
-}
-.contact-item{
-  display:flex;
-  flex-direction:column;
-  gap:2px;
-}
-.contact-label{
-  font-family:var(--font-mono);
-  font-size:8px;
-  letter-spacing:.22em;
-  text-transform:uppercase;
-  color:var(--muted);
-}
-.contact-value{
-  font-size:11px;
-  color:var(--text);
-}
+    /* CUSTOM CURSOR */
+    #cursor, #cursorRing {
+      position: fixed;
+      top: 0; left: 0;
+      pointer-events: none;
+      z-index: 9999;
+    }
 
-/* Marquee */
-.marquee-wrap{
-  overflow:hidden;
-  border-top:1px solid var(--border);
-  border-bottom:1px solid var(--border);
-  padding:10px 0;
-  margin-bottom:32px;
-  opacity:0;
-  animation:fadeIn .8s .9s forwards;
-}
-.marquee-inner{
-  display:flex;
-  gap:0;
-  white-space:nowrap;
-  animation:marquee 22s linear infinite;
-}
-.marquee-text{
-  font-family:var(--font-display);
-  font-size:12px;
-  font-weight:700;
-  text-transform:uppercase;
-  letter-spacing:.22em;
-  color:var(--muted);
-  padding-right:40px;
-}
-.marquee-text span{
-  color:var(--accent);
-  margin-right:40px;
-}
+    #cursor {
+      width: 12px;
+      height: 12px;
+      background: var(--accent);
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      transition: transform .12s ease;
+    }
 
-/* Footer */
-footer{
-  margin-top:48px;
-  padding-top:20px;
-  border-top:1px solid var(--border);
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  flex-wrap:wrap;
-  gap:12px;
-}
-.footer-copy{
-  font-family:var(--font-mono);
-  font-size:9px;
-  letter-spacing:.18em;
-  text-transform:uppercase;
-  color:var(--muted);
-}
-.footer-links{
-  display:flex;
-  gap:16px;
-}
-.footer-links a{
-  font-family:var(--font-mono);
-  font-size:9px;
-  text-transform:uppercase;
-  letter-spacing:.18em;
-  color:var(--muted);
-  text-decoration:none;
-  transition:color .15s;
-}
-.footer-links a:hover{color:var(--accent)}
+    #cursor.cursor--hover {
+      transform: scale(2);
+    }
 
-/* Animations */
-@keyframes fadeUp{
-  from{opacity:0;transform:translateY(20px)}
-  to{opacity:1;transform:translateY(0)}
-}
-@keyframes fadeIn{
-  from{opacity:0}
-  to{opacity:1}
-}
-@keyframes marquee{
-  from{transform:translateX(0)}
-  to{transform:translateX(-50%)}
-}
-@keyframes fillBar{
-  to{transform:scaleX(1)}
-}
-
-.reveal{
-  opacity:0;
-  transform:translateY(24px);
-  transition:opacity .6s ease,transform .6s ease;
-}
-.reveal.visible{
-  opacity:1;
-  transform:translateY(0);
-}
-
-/* Responsive */
-@media (max-width:860px){
-  main{grid-template-columns:1fr}
-  .stats-bar{grid-template-columns:repeat(2,1fr)}
-  .projects-grid{grid-template-columns:1fr}
-  .hero-tagline{text-align:left}
-  .hero-actions{justify-content:flex-start}
-  .hero-left{max-width:100%}
-}
-@media (max-width:520px){
-  .hero-name{font-size:56px}
-  .stats-bar{grid-template-columns:1fr 1fr}
-  .page{padding-inline:16px}
-  .hero-photo img{width:120px;height:120px}
-}
+    #cursorRing {
+      width: 40px;
+      height: 40px;
+      border: 2px solid var(--accent);
+      border-radius: 50%;
+      opacity: 0.4;
+      transform: translate(-50%, -50%);
+      transition: transform .18s ease;
+    }
   </style>
 </head>
+
 <body>
 
-  <!-- Custom cursor elements -->
-  <div class="cursor" id="cursor"></div>
-  <div class="cursor-ring" id="cursorRing"></div>
+  <!-- Custom Cursor -->
+  <div id="cursor"></div>
+  <div id="cursorRing"></div>
 
-  <div class="page">
-
-    <!-- HEADER / HERO -->
+  <!-- HEADER -->
   <header>
-  <div class="header-eyebrow">Marketing Portfolio · 2026</div>
+    <div class="header-eyebrow">Marketing Portfolio · 2026</div>
 
-  <div class="hero-head">
-    <h1 class="hero-name">Javier<br><span>Alfonso</span><br>Moreno</h1>
+    <div class="hero-head">
+      <h1 class="hero-name">Javier<br><span>Alfonso</span><br>Moreno</h1>
 
-    <div class="hero-photo">
-     <img id="heroImage"
-     src="assets/profile.jpg"
-     srcset="assets/profile@2x.jpg 2x, assets/profile@3x.jpg 3x"
-     alt="Javier Alfonso Moreno"
-     width="260" height="260">
+      <div class="hero-photo">
+        <img id="heroImage" src="assets/profile.jpg" alt="Javier Alfonso Moreno">
+      </div>
+    </div>
+
+    <div class="hero-rule"></div>
+
+    <div class="hero-bottom">
+      <div class="hero-left">
+        <div class="hero-role">Senior Marketing Manager · PUMA EMEA</div>
+        <div class="hero-tagline">Driving Running & Training category growth through storytelling, creator networks, and full‑funnel brand experiences.</div>
+
+        <div class="hero-buttons">
+          <a class="btn" href="#work">View Work</a>
+          <a class="btn" href="mailto:javier.alfonso.moreno@gmail.com">Contact</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- STATS -->
+  <div class="stats-bar">
+    <div class="stat-item">
+      <div class="stat-num">1B+</div>
+      <div class="stat-label">Impressions · Go Wild 2025</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">€10M</div>
+      <div class="stat-label">Budget managed · EMEA</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">0→3%</div>
+      <div class="stat-label">Market share · Running EU</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">50%</div>
+      <div class="stat-label">Sell-through · 4 weeks</div>
     </div>
   </div>
 
-  <div class="hero-rule"></div>
-
-  <!-- rest of hero-bottom remains as before -->
-  <div class="hero-bottom"> ... </div>
-</header>
-
-
-    <!-- STATS -->
-    <div class="stats-bar">
-      <div class="stat-item">
-        <div class="stat-num">1B+</div>
-        <div class="stat-label">Impressions · Go Wild 2025</div>
-      </div>
-      <div class="stat-item">
-        <div class="stat-num">€10M</div>
-        <div class="stat-label">Budget managed · EMEA</div>
-      </div>
-      <div class="stat-item">
-        <div class="stat-num">0→3%</div>
-        <div class="stat-label">Market share · Running EU</div>
-      </div>
-      <div class="stat-item">
-        <div class="stat-num">50%</div>
-        <div class="stat-label">Sell-through · 4 weeks</div>
-      </div>
+  <!-- MARQUEE -->
+  <div class="marquee-wrap">
+    <div class="marquee-inner">
+      <div class="marquee-text">Running · Training · EMEA Campaigns · GTM Strategy · Influencer Activation · Experiential Marketing · Partner Activation · Full-Funnel</div>
+      <div class="marquee-text">Running · Training · EMEA Campaigns · GTM Strategy · Influencer Activation · Experiential Marketing · Partner Activation · Full-Funnel</div>
     </div>
-
-    <!-- MARQUEE -->
-    <div class="marquee-wrap">
-      <div class="marquee-inner">
-        <div class="marquee-text">
-          Running <span>·</span> Training <span>·</span> EMEA Campaigns <span>·</span> GTM Strategy
-          <span>·</span> Influencer Activation <span>·</span> Experiential Marketing <span>·</span>
-          Partner Activation <span>·</span> Full-Funnel
-        </div>
-        <div class="marquee-text">
-          Running <span>·</span> Training <span>·</span> EMEA Campaigns <span>·</span> GTM Strategy
-          <span>·</span> Influencer Activation <span>·</span> Experiential Marketing <span>·</span>
-          Partner Activation <span>·</span> Full-Funnel
-        </div>
-      </div>
-    </div>
-
-    <!-- MAIN GRID -->
-    <main>
-      <div>
-
-        <!-- ABOUT -->
-        <section class="reveal" id="about">
-          <div class="section-head">
-            <span class="section-tag">Profile</span>
-            <span class="section-title">About</span>
-          </div>
-
-          <div class="card">
-            <p class="about-text">
-              I don't just run campaigns. I build the <strong>marketing infrastructure that moves categories.</strong><br><br>
-              In four years at PUMA, I went from intern to Senior Marketing Manager — not by waiting for opportunities,
-              but by creating them. I took a Running category with <strong>zero European market share</strong> and helped
-              turn it into a growing, culturally relevant business. I built ambassador strategies that became blueprints.
-              I activated partnerships that others had only planned on paper. I delivered events that people still talk about.<br><br>
-              My work sits at the intersection of <strong>brand and commerce.</strong> I understand how a storytelling
-              decision on Monday affects sell-through on Friday. I know how to align a room full of stakeholders across
-              five countries — and then actually execute.
-            </p>
-
-            <div class="pill-row">
-              <span class="pill pill-hot">Running & Training</span>
-              <span class="pill">Full-funnel campaigns</span>
-              <span class="pill">Partner activation</span>
-              <span class="pill">Influencer strategy</span>
-              <span class="pill">Experiential marketing</span>
-              <span class="pill">GTM execution</span>
-            </div>
-          </div>
-        </section>
-
-        <!-- PROJECTS -->
-        <section class="reveal" id="projects">
-          <div class="section-head">
-            <span class="section-tag">Selected work</span>
-            <span class="section-title">Key Projects</span>
-          </div>
-
-          <div class="card">
-            <div class="projects-grid">
-
-              <article class="project-card">
-                <div class="project-tag">Running · Market share</div>
-                <h3 class="project-title">Running Category Growth — Europe</h3>
-                <p class="project-text">
-                  As Running Marketing Lead for EMEA, grew Running category market share in Europe from 0% to 3%
-                  by aligning GTM, campaign sequencing and partner activation across key markets.
-                </p>
-                <div class="project-metric">+3pts market share · Pan-European</div>
-              </article>
-
-              <article class="project-card">
-                <div class="project-tag">Full-funnel · Campaign</div>
-                <h3 class="project-title">Go Wild 2025 — Pan-European Campaign</h3>
-                <p class="project-text">
-                  Delivered PUMA's largest Running campaign in Europe — a full-funnel activation integrating paid,
-                  owned and earned channels, creators and retail to drive brand heat and sell-through.
-                </p>
-                <div class="project-metric">1B impressions · 20% engagement · +10% sales</div>
-              </article>
-
-              <article class="project-card">
-                <div class="project-tag">Experiential · Events</div>
-                <h3 class="project-title">The High Point & Hyrox Europe</h3>
-                <p class="project-text">
-                  Delivered The High Point – Boston Marathon 2025, Faster Monza 2023 and Hyrox Europe roll-out —
-                  integrating event experience, content, PR and creator strategy into frameworks that generated
-                  measurable brand heat.
-                </p>
-                <div class="project-metric">Multi-market · Press coverage · Community engagement</div>
-              </article>
-
-              <article class="project-card">
-                <div class="project-tag">Trade · Partners</div>
-                <h3 class="project-title">Hyrox & Intersport Omnichannel</h3>
-                <p class="project-text">
-                  Led omnichannel activations with Hyrox and Intersport across 10+ European markets, integrating
-                  influencer strategy, event planning, content and PR into single campaign frameworks.
-                </p>
-                <div class="project-metric">10+ markets · Key account leadership</div>
-              </article>
-
-            </div>
-          </div>
-        </section>
-
-        <!-- EXPERIENCE -->
-        <section class="reveal">
-          <div class="section-head">
-            <span class="section-tag">Career</span>
-            <span class="section-title">Experience</span>
-          </div>
-
-          <div class="card">
-            <div class="timeline">
-
-              <div class="timeline-item">
-                <div class="timeline-date">Jan 2025 — Present</div>
-                <div class="timeline-role">Senior Marketing Manager</div>
-                <div class="timeline-company">PUMA Group · Running & Training Europe</div>
-
-                <ul class="timeline-bullets">
-                  <li>Grew Running market share from <strong>0% to 3%</strong> across Europe.</li>
-                  <li>Delivered <strong>Go Wild 2025</strong> — 1B impressions, 20% engagement, +10% sales uplift.</li>
-                  <li>Managed a <strong>€10M multi-market budget</strong> across Running, Training, Football and Handball.</li>
-                  <li>Led omnichannel activations with Hyrox and Intersport across <strong>10+ European markets.</strong></li>
-                  <li>Aligned GTM, Sales, Product and Creative teams across EMEA for consistent brand execution.</li>
-                </ul>
-              </div>
-
-              <div class="timeline-item">
-                <div class="timeline-date">Jan 2022 — Dec 2024</div>
-                <div class="timeline-role">Marketing Manager</div>
-                <div class="timeline-company">PUMA Group · Running & Training Europe</div>
-
-                <ul class="timeline-bullets">
-                  <li>Drove Running sell-through to <strong>50% in first 4 weeks</strong> through campaign sequencing and channel alignment.</li>
-                  <li>Secured <strong>Pamela Reif</strong> as PUMA's European Training ambassador — strategy became the EMEA blueprint.</li>
-                  <li>Led <strong>Intersport International</strong> campaign strategy across Europe — PUMA's largest wholesale partner.</li>
-                  <li>Established the European Training category marketing function <strong>from scratch.</strong></li>
-                </ul>
-              </div>
-
-            </div>
-          </div>
-        </section>
-
-      </div>
-
-      <!-- SIDEBAR -->
-      <aside>
-
-        <div class="reveal" id="skills">
-          <div class="side-card">
-            <div class="side-title">Core Skills</div>
-
-            <div class="skill-row">
-              <span class="skill-name">Full-funnel campaigns</span>
-              <div class="skill-bar"><div class="skill-fill" style="width:95%"></div></div>
-            </div>
-
-            <div class="skill-row">
-              <span class="skill-name">GTM Strategy</span>
-              <div class="skill-bar"><div class="skill-fill" style="width:92%;animation-delay:1.1s"></div></div>
-            </div>
-
-            <div class="skill-row">
-              <span class="skill-name">Partner Activation</span>
-              <div class="skill-bar"><div class="skill-fill" style="width:90%;animation-delay:1.2s"></div></div>
-            </div>
-
-            <div class="skill-row">
-              <span class="skill-name">Event Marketing</span>
-              <div class="skill-bar"><div class="skill-fill" style="width:88%;animation-delay:1.3s"></div></div>
-            </div>
-
-            <div class="skill-row">
-              <span class="skill-name">Budget & ROI</span>
-              <div class="skill-bar"><div class="skill-fill" style="width:85%;animation-delay:1.4s"></div></div>
-            </div>
-
-            <div class="skill-row">
-              <span class="skill-name">Cross-functional leadership</span>
-              <div class="skill-bar"><div class="skill-fill" style="width:90%;animation-delay:1.5s"></div></div>
-            </div>
-
-            <div class="skill-row">
-              <span class="skill-name">Influencer Strategy</span>
-              <div class="skill-bar"><div class="skill-fill" style="width:88%;animation-delay:1.6s"></div></div>
-            </div>
-
-            <div class="skill-row">
-              <span class="skill-name">Data-driven optimisation</span>
-              <div class="skill-bar"><div class="skill-fill" style="width:80%;animation-delay:1.7s"></div></div>
-            </div>
-
-          </div>
-        </div>
-
-        <div class="reveal">
-          <div class="side-card">
-            <div class="side-title">Languages</div>
-
-            <div class="lang-item">
-              <span class="lang-name">Spanish</span>
-              <span class="lang-level">Native</span>
-            </div>
-
-            <div class="lang-item">
-              <span class="lang-name">English</span>
-              <span class="lang-level">Proficient · C1</span>
-            </div>
-
-            <div class="lang-item">
-              <span class="lang-name">German</span>
-              <span class="lang-level">Beginner · A1/A2</span>
-            </div>
-
-          </div>
-        </div>
-
-        <div class="reveal">
-          <div class="side-card">
-            <div class="side-title">Education</div>
-
-            <div class="edu-item">
-              <div class="edu-degree">MBA in Sport Management</div>
-              <div class="edu-uni">Polytechnic University of Valencia</div>
-              <div class="edu-year">2020 – 2022</div>
-            </div>
-
-            <div class="edu-item">
-              <div class="edu-degree">Master in Big Data in Sports</div>
-              <div class="edu-uni">UCAM Universidad Católica de Murcia</div>
-              <div class="edu-year">2020 – 2021</div>
-            </div>
-
-            <div class="edu-item">
-              <div class="edu-degree">Bachelor in Sports Science</div>
-              <div class="edu-uni">University of Valencia</div>
-              <div class="edu-year">2016 – 2020</div>
-            </div>
-
-          </div>
-        </div>
-
-        <div class="reveal">
-          <div class="side-card">
-            <div class="side-title">Contact</div>
-
-            <div class="contact-row">
-              <div class="contact-item">
-                <span class="contact-label">Email</span>
-                <span class="contact-value">javier.alfonso.moreno@gmail.com</span>
-              </div>
-
-              <div class="contact-item">
-                <span class="contact-label">Phone</span>
-                <span class="contact-value">+34 622 889 027</span>
-              </div>
-
-              <div class="contact-item">
-                <span class="contact-label">Location</span>
-                <span class="contact-value">Fürth, Germany · EMEA</span>
-              </div>
-
-              <div class="contact-item">
-                <span class="contact-label">Positioning</span>
-                <span class="contact-value">Senior Marketing Manager · Running & Training · Europe</span>
-              </div>
-            </div>
-
-          </div>
-        </div>
-
-      </aside>
-    </main>
-
-    <footer>
-      <div class="footer-copy">© 2026 Javier Alfonso Moreno — Marketing Portfolio</div>
-      <div class="footer-links">
-        <a href="#about">Profile</a>
-        <a href="#projects">Projects</a>
-        <a href="#skills">Skills</a>
-      </div>
-    </footer>
-
   </div>
 
-  <!-- Fallback SVG -->
-  <svg id="fallbackSVG" xmlns="http://www.w3.org/2000/svg" width="180" height="180" viewBox="0 0 180 180" style="display:none">
-    <rect width="100%" height="100%" fill="#0c0c12"/>
-    <circle cx="90" cy="60" r="36" fill="#00a3ff" />
-    <rect x="30" y="110" width="120" height="36" rx="6" fill="#00a3ff"/>
-  </svg>
+  <!-- CONSOLIDATED SCRIPT -->
+  <script>
+    (function(){
+      /* Cursor */
+      const cursor = document.getElementById('cursor');
+      const ring = document.getElementById('cursorRing');
+      let mx=0,my=0,rx=0,ry=0;
 
-  <!-- Consolidated scripts: cursor, reveal, and safe image fallback -->
-<!-- Consolidated scripts: cursor, reveal, and safe image fallback -->
-<script>
-(function(){
-  /* ---------- Cursor ---------- */
-  const cursor = document.getElementById('cursor');
-  const ring = document.getElementById('cursorRing');
-  let mx = 0, my = 0, rx = 0, ry = 0;
+      document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;});
 
-  document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
-
-  function animCursor(){
-    if(!cursor || !ring) return;
-    cursor.style.transform = `translate(${mx - 6}px, ${my - 6}px)`;
-    rx += (mx - rx) * 0.12;
-    ry += (my - ry) * 0.12;
-    ring.style.transform = `translate(${rx - 20}px, ${ry - 20}px)`;
-    requestAnimationFrame(animCursor);
-  }
-  animCursor();
-
-  // Hover effect (scale) for interactive elements
-  document.querySelectorAll('a, button').forEach(el => {
-    el.addEventListener('mouseenter', () => {
-      if(cursor) cursor.style.transform += ' scale(2)';
-    });
-    el.addEventListener('mouseleave', () => {
-      if(cursor) cursor.style.transform = `translate(${mx - 6}px, ${my - 6}px)`;
-    });
-  });
-
-  /* ---------- Scroll reveal ---------- */
-  const reveals = document.querySelectorAll('.reveal');
-  if(reveals.length){
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry, i) => {
-        if(entry.isIntersecting){
-          setTimeout(() => entry.target.classList.add('visible'), i * 80);
-          observer.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.08 });
-    reveals.forEach(el => observer.observe(el));
-  }
-
-  /* ---------- Safe image fallback (only on real errors) ---------- */
-  const img = document.getElementById('heroImage');
-  if(img){
-    const alternatives = [
-      // Keep Drive links only if you actually need them; they often get blocked.
-      "https://drive.google.com/uc?export=view&id=1m4EatmhEMNczeNi7x6BMm-IRbSl7KPhu",
-      "https://drive.google.com/uc?export=download&id=1m4EatmhEMNczeNi7x6BMm-IRbSl7KPhu",
-      "https://via.placeholder.com/360x360/00a3ff/000000?text=Javier"
-    ];
-    let attempt = 0;
-
-    function tryNextOnError(){
-      if(attempt >= alternatives.length){
-        const svg = document.getElementById('fallbackSVG');
-        if(svg){
-          const xml = new XMLSerializer().serializeToString(svg);
-          img.src = "data:image/svg+xml;base64," + btoa(xml);
-          img.style.borderRadius = "50%";
-        }
-        img.removeEventListener('error', tryNextOnError);
-        return;
+      function loop(){
+        cursor.style.transform=`translate(${mx-6}px,${my-6}px)`;
+        rx+=(mx-rx)*0.12;
+        ry+=(my-ry)*0.12;
+        ring.style.transform=`translate(${rx-20}px,${ry-20}px)`;
+        requestAnimationFrame(loop);
       }
-      img.src = alternatives[attempt++];
-    }
+      loop();
 
-    img.addEventListener('error', tryNextOnError);
-
-    img.addEventListener('load', () => {
-      img.style.opacity = "1";
-    });
-
-    // If already cached and loaded, trigger load handler
-    if(img.complete && img.naturalWidth > 0){
-      img.dispatchEvent(new Event('load'));
-    }
-  }
-})();
-</script>
-
-  /* ============================
-     CUSTOM CURSOR
-  ============================ */
-  (function(){
-    const cursor = document.getElementById('cursor');
-    const ring = document.getElementById('cursorRing');
-    let mx = 0, my = 0, rx = 0, ry = 0;
-
-    document.addEventListener('mousemove', e => {
-      mx = e.clientX;
-      my = e.clientY;
-    });
-
-    function animCursor(){
-      if(!cursor || !ring) return;
-
-      cursor.style.transform = `translate(${mx - 6}px, ${my - 6}px)`;
-
-      rx += (mx - rx) * 0.12;
-      ry += (my - ry) * 0.12;
-      ring.style.transform = `translate(${rx - 20}px, ${ry - 20}px)`;
-
-      requestAnimationFrame(animCursor);
-    }
-    animCursor();
-
-    // Cursor hover effect on links & buttons
-    document.querySelectorAll('a, button').forEach(el => {
-      el.addEventListener('mouseenter', () => {
-        cursor.style.transform += ' scale(2)';
+      document.querySelectorAll('a,button').forEach(el=>{
+        el.addEventListener('mouseenter',()=>cursor.classList.add('cursor--hover'));
+        el.addEventListener('mouseleave',()=>cursor.classList.remove('cursor--hover'));
       });
-      el.addEventListener('mouseleave', () => {
-        cursor.style.transform = `translate(${mx - 6}px, ${my - 6}px)`;
-      });
-    });
-  })();
 
+      /* Reveal */
+      const reveals=document.querySelectorAll('.reveal');
+      const obs=new IntersectionObserver((entries)=>{
+        entries.forEach((entry,i)=>{
+          if(entry.isIntersecting){
+            setTimeout(()=>entry.target.classList.add('visible'),i*80);
+            obs.unobserve(entry.target);
+          }
+        });
+      },{threshold:0.08});
+      reveals.forEach(el=>obs.observe(el));
 
-  /* ============================
-     SCROLL REVEAL
-  ============================ */
-  (function(){
-    const reveals = document.querySelectorAll('.reveal');
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry, i) => {
-        if(entry.isIntersecting){
-          setTimeout(() => entry.target.classList.add('visible'), i * 80);
-          observer.unobserve(entry.target);
+      /* Hero image */
+      const img=document.getElementById('heroImage');
+      if(img){
+        img.addEventListener('load',()=>{img.style.opacity='1';});
+        if(img.complete && img.naturalWidth>0){
+          img.dispatchEvent(new Event('load'));
         }
-      });
-    }, { threshold: 0.08 });
-
-    reveals.forEach(el => observer.observe(el));
-  })();
-
-
-  /* ============================
-     IMAGE FALLBACK (Google Drive)
-     — GitHub Pages compatible
-  ============================ */
-
-    let attempt = 0;
-
-    function tryNext(){
-      if(attempt >= alternatives.length){
-        // Último recurso: SVG inline
-        const svg = document.getElementById('fallbackSVG');
-        if(svg){
-          const xml = new XMLSerializer().serializeToString(svg);
-          img.src = "data:image/svg+xml;base64," + btoa(xml);
-          img.style.borderRadius = "50%";
-        }
-        return;
       }
-      img.src = alternatives[attempt++];
-    }
-
-    img.addEventListener("error", tryNext);
-
-    // Si carga pero Drive bloquea la imagen → naturalWidth = 0
-    setTimeout(() => {
-      if(img.naturalWidth === 0) tryNext();
-    }, 1200);
-
-    img.addEventListener("load", () => {
-      img.style.opacity = "1";
-    });
-  })();
-</script>
+    })();
+  </script>
 
 </body>
+</html>
