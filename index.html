@@ -26,11 +26,16 @@
     }
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
     html{scroll-behavior:smooth}
-    body{font-family:var(--fb);background:var(--bg);color:var(--text);line-height:1.6;overflow-x:hidden;cursor:none;-webkit-font-smoothing:antialiased}
+    body{font-family:var(--fb);background:var(--bg);color:var(--text);line-height:1.6;overflow-x:hidden;-webkit-font-smoothing:antialiased}
     a{color:inherit;text-decoration:none}
 
-    #cur{position:fixed;width:10px;height:10px;background:var(--accent);border-radius:50%;pointer-events:none;z-index:9999;mix-blend-mode:difference;transition:width .2s,height .2s}
-    #cur-ring{position:fixed;width:34px;height:34px;border:1px solid rgba(0,170,255,.3);border-radius:50%;pointer-events:none;z-index:9998}
+    /* cursor — desktop only */
+    #cur,#cur-ring{display:none}
+    @media(hover:hover) and (pointer:fine){
+      body{cursor:none}
+      #cur{display:block;position:fixed;width:10px;height:10px;background:var(--accent);border-radius:50%;pointer-events:none;z-index:9999;mix-blend-mode:difference;transition:width .2s,height .2s}
+      #cur-ring{display:block;position:fixed;width:34px;height:34px;border:1px solid rgba(0,170,255,.3);border-radius:50%;pointer-events:none;z-index:9998}
+    }
 
     body::before{content:'';position:fixed;inset:0;background:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");pointer-events:none;z-index:0;opacity:.8}
     body::after{content:'';position:fixed;top:-40vh;right:-20vw;width:80vw;height:80vh;background:radial-gradient(ellipse,rgba(0,170,255,.06) 0%,transparent 65%);pointer-events:none;z-index:0}
@@ -38,171 +43,209 @@
     ::-webkit-scrollbar{width:2px}
     ::-webkit-scrollbar-thumb{background:var(--accent)}
 
-    .page{max-width:1200px;margin:0 auto;padding:0 28px 80px;position:relative;z-index:1}
+    .page{max-width:1200px;margin:0 auto;padding:0 20px 60px;position:relative;z-index:1}
 
-    header{padding:60px 0 44px}
+    /* ── HEADER ── */
+    header{padding:40px 0 32px}
+
     .eyebrow{font-family:var(--fm);font-size:10px;letter-spacing:.26em;text-transform:uppercase;color:var(--accent);margin-bottom:14px;opacity:0;animation:up .6s .1s forwards}
 
-    .hero-head{display:flex;align-items:center;justify-content:space-between;gap:32px;opacity:0;animation:up .7s .2s forwards}
-    .hero-name{flex:1;font-family:var(--fd);font-size:clamp(58px,10.5vw,136px);font-weight:900;line-height:.87;text-transform:uppercase;letter-spacing:-.01em}
+    .hero-head{display:flex;align-items:center;justify-content:space-between;gap:24px;opacity:0;animation:up .7s .2s forwards}
+    .hero-name{flex:1;font-family:var(--fd);font-size:clamp(48px,10vw,136px);font-weight:900;line-height:.87;text-transform:uppercase;letter-spacing:-.01em}
     .hero-name span{color:transparent;-webkit-text-stroke:2px var(--accent)}
 
-    .hero-photo{flex:0 0 auto;width:210px;height:210px;position:relative}
-    .hero-photo::before{content:'';position:absolute;inset:-4px;border-radius:50%;background:conic-gradient(var(--accent),var(--gold),var(--accent));animation:spin 6s linear infinite;z-index:0}
-    .hero-photo::after{content:'';position:absolute;inset:-1px;border-radius:50%;background:var(--bg);z-index:1}
+    .hero-photo{flex:0 0 auto;width:120px;height:120px;position:relative}
+    .hero-photo::before{content:'';position:absolute;inset:-3px;border-radius:50%;background:conic-gradient(var(--accent),var(--gold),var(--accent));animation:spin 6s linear infinite;z-index:0}
+    .hero-photo::after{content:'';position:absolute;inset:0px;border-radius:50%;background:var(--bg);z-index:1}
     .hero-photo img{position:relative;z-index:2;width:100%;height:100%;object-fit:cover;border-radius:50%;display:block}
 
-    .hero-rule{height:1px;background:linear-gradient(90deg,var(--accent),rgba(0,170,255,.1) 60%,transparent);margin:22px 0 26px;opacity:0;animation:fadeIn .6s .4s forwards}
+    .hero-rule{height:1px;background:linear-gradient(90deg,var(--accent),rgba(0,170,255,.1) 60%,transparent);margin:18px 0 20px;opacity:0;animation:fadeIn .6s .4s forwards}
 
-    .hero-foot{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:20px;opacity:0;animation:up .6s .5s forwards}
-    .hero-role{font-family:var(--fd);font-size:clamp(17px,2.4vw,25px);font-weight:300;letter-spacing:.13em;text-transform:uppercase;color:var(--muted)}
-    .hero-right{text-align:right}
-    .hero-tag{font-size:13px;color:var(--muted);max-width:360px;line-height:1.8}
-    .hero-actions{display:flex;gap:10px;margin-top:10px;justify-content:flex-end}
+    .hero-foot{display:flex;flex-direction:column;gap:12px;opacity:0;animation:up .6s .5s forwards}
+    .hero-role{font-family:var(--fd);font-size:clamp(15px,4vw,25px);font-weight:300;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+    .hero-tag{font-size:13px;color:var(--muted);line-height:1.7;max-width:100%}
+    .hero-actions{display:flex;gap:8px;flex-wrap:wrap}
 
-    .btn{font-family:var(--fm);font-size:10px;text-transform:uppercase;letter-spacing:.18em;padding:11px 20px;border-radius:3px;border:1px solid var(--border);background:transparent;color:var(--text);cursor:none;transition:all .18s}
+    .btn{font-family:var(--fm);font-size:10px;text-transform:uppercase;letter-spacing:.14em;padding:10px 16px;border-radius:3px;border:1px solid var(--border);background:transparent;color:var(--text);transition:all .18s;-webkit-tap-highlight-color:transparent}
     .btn-p{background:var(--accent);border-color:var(--accent);color:#000;font-weight:600}
-    .btn-p:hover{filter:brightness(1.1);transform:translateY(-2px);box-shadow:0 12px 32px rgba(0,170,255,.3)}
-    .btn-o:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-2px)}
+    .btn-p:hover{filter:brightness(1.1);box-shadow:0 8px 24px rgba(0,170,255,.3)}
+    .btn-o:hover{border-color:var(--accent);color:var(--accent)}
 
-    .stats{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:36px;overflow:hidden;opacity:0;animation:up .6s .7s forwards;background:var(--surface)}
-    .stat{padding:22px 24px;border-right:1px solid var(--border);position:relative;overflow:hidden;transition:background .2s}
-    .stat:last-child{border-right:none}
+    /* ── STATS ── */
+    .stats{display:grid;grid-template-columns:repeat(2,1fr);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:28px;overflow:hidden;opacity:0;animation:up .6s .7s forwards;background:var(--surface)}
+    .stat{padding:16px 18px;border-right:1px solid var(--border);border-bottom:1px solid var(--border);position:relative;overflow:hidden;transition:background .2s}
+    .stat:nth-child(2){border-right:none}
+    .stat:nth-child(3){border-bottom:none}
+    .stat:nth-child(4){border-right:none;border-bottom:none}
     .stat::after{content:'';position:absolute;bottom:0;left:0;height:2px;width:0;background:linear-gradient(90deg,var(--accent),var(--gold));transition:width .4s}
     .stat:hover::after{width:100%}
-    .stat:hover{background:var(--card)}
-    .stat-n{font-family:var(--fd);font-size:clamp(26px,3vw,40px);font-weight:900;color:var(--accent);line-height:1;margin-bottom:5px}
-    .stat-l{font-family:var(--fm);font-size:9px;text-transform:uppercase;letter-spacing:.2em;color:var(--muted)}
+    .stat-n{font-family:var(--fd);font-size:clamp(22px,6vw,40px);font-weight:900;color:var(--accent);line-height:1;margin-bottom:4px}
+    .stat-l{font-family:var(--fm);font-size:8px;text-transform:uppercase;letter-spacing:.16em;color:var(--muted)}
 
-    .mq{overflow:hidden;border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:8px 0;margin-bottom:36px;opacity:0;animation:fadeIn .8s .9s forwards}
+    /* ── MARQUEE ── */
+    .mq{overflow:hidden;border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:8px 0;margin-bottom:28px;opacity:0;animation:fadeIn .8s .9s forwards}
     .mq-inner{display:flex;white-space:nowrap;animation:mq 26s linear infinite}
-    .mq-t{font-family:var(--fd);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.24em;color:var(--muted);padding-right:48px}
-    .mq-t b{color:var(--accent);margin:0 16px}
+    .mq-t{font-family:var(--fd);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.2em;color:var(--muted);padding-right:40px}
+    .mq-t b{color:var(--accent);margin:0 12px}
 
-    main{display:grid;grid-template-columns:minmax(0,2.2fr) minmax(0,1fr);gap:28px}
+    /* ── MAIN — single column on mobile ── */
+    main{display:flex;flex-direction:column;gap:0}
 
-    .sh{display:flex;align-items:center;gap:10px;margin-bottom:14px}
-    .sh-tag{font-family:var(--fm);font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);background:rgba(0,170,255,.07);border:1px solid rgba(0,170,255,.2);padding:3px 9px;border-radius:3px}
-    .sh-title{font-family:var(--fd);font-size:21px;font-weight:700;text-transform:uppercase;letter-spacing:.14em}
+    /* ── SECTION HEADS ── */
+    .sh{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+    .sh-tag{font-family:var(--fm);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--accent);background:rgba(0,170,255,.07);border:1px solid rgba(0,170,255,.2);padding:3px 8px;border-radius:3px}
+    .sh-title{font-family:var(--fd);font-size:18px;font-weight:700;text-transform:uppercase;letter-spacing:.12em}
 
-    .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:22px;margin-bottom:26px;transition:border-color .2s}
-    .card:hover{border-color:rgba(0,170,255,.22)}
+    /* ── CARDS ── */
+    .card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin-bottom:20px;transition:border-color .2s}
 
-    .about-text{font-size:14px;color:var(--muted);line-height:1.9;margin-bottom:18px}
+    /* ── ABOUT ── */
+    .about-text{font-size:14px;color:var(--muted);line-height:1.85;margin-bottom:16px}
     .about-text strong{color:var(--text);font-weight:500}
     .about-text em{color:var(--accent);font-style:normal}
-    .pills{display:flex;flex-wrap:wrap;gap:7px}
-    .pill{font-family:var(--fm);font-size:9px;text-transform:uppercase;letter-spacing:.16em;padding:5px 11px;border-radius:3px;border:1px solid var(--border);color:var(--muted);transition:all .15s;cursor:default}
-    .pill:hover{border-color:var(--accent);color:var(--accent)}
+    .pills{display:flex;flex-wrap:wrap;gap:6px}
+    .pill{font-family:var(--fm);font-size:9px;text-transform:uppercase;letter-spacing:.14em;padding:5px 10px;border-radius:3px;border:1px solid var(--border);color:var(--muted);-webkit-tap-highlight-color:transparent}
     .pill-h{border-color:rgba(0,170,255,.3);color:var(--accent);background:rgba(0,170,255,.05)}
 
+    /* ── SLIDER ── */
     .slider-wrap{overflow:hidden;border-radius:6px}
-    .slides{display:flex;transition:transform .5s cubic-bezier(.25,.46,.45,.94)}
+    .slides{display:flex;transition:transform .45s cubic-bezier(.25,.46,.45,.94)}
     .slide{min-width:100%}
-    .slide-inner{display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--border);border-radius:6px;overflow:hidden;background:var(--card);min-height:310px}
-    .slide-img{position:relative;overflow:hidden;background:var(--faint);min-height:240px;display:flex;align-items:center;justify-content:center}
-    .slide-img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.85;transition:opacity .3s,transform .4s;display:block;z-index:0}
-    .slide-inner:hover .slide-img img{opacity:1;transform:scale(1.03)}
-    .slide-img-ph{display:flex;flex-direction:column;align-items:center;gap:10px;padding:28px;text-align:center}
-    .ph-box{width:48px;height:48px;border:1.5px dashed var(--border);border-radius:6px;display:flex;align-items:center;justify-content:center}
-    .ph-box svg{width:20px;height:20px;stroke:var(--muted);fill:none;stroke-width:1.5}
-    .ph-name{font-family:var(--fm);font-size:9px;text-transform:uppercase;letter-spacing:.2em;color:var(--muted)}
-    .ph-hint{font-size:10px;color:var(--muted);opacity:.45}
-    .slide-img::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent 60%,var(--card));pointer-events:none}
-    .slide-body{padding:26px 24px 22px;display:flex;flex-direction:column;justify-content:space-between}
-    .slide-num{font-family:var(--fm);font-size:9px;color:var(--muted);letter-spacing:.2em;margin-bottom:5px}
-    .slide-cat{font-family:var(--fm);font-size:9px;text-transform:uppercase;letter-spacing:.2em;color:var(--accent);margin-bottom:10px}
-    .slide-title{font-family:var(--fd);font-size:clamp(16px,2vw,23px);font-weight:900;text-transform:uppercase;letter-spacing:.05em;line-height:1.1;margin-bottom:12px}
-    .slide-desc{font-size:12px;color:var(--muted);line-height:1.75;flex:1;margin-bottom:18px}
-    .slide-kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}
-    .kpi{background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:10px 7px;text-align:center}
-    .kpi-val{font-family:var(--fd);font-size:20px;font-weight:900;color:var(--gold);line-height:1;margin-bottom:3px}
-    .kpi-lbl{font-family:var(--fm);font-size:8px;text-transform:uppercase;letter-spacing:.12em;color:var(--muted)}
-    .slide-nav{display:flex;justify-content:space-between;align-items:center;margin-top:14px}
+
+    .slide-inner{
+      display:flex;
+      flex-direction:column;
+      border:1px solid var(--border);
+      border-radius:6px;
+      overflow:hidden;
+      background:var(--card);
+    }
+    .slide-img{
+      position:relative;
+      width:100%;
+      height:200px;
+      overflow:hidden;
+      background:var(--faint);
+      flex-shrink:0;
+    }
+    .slide-img img{
+      position:absolute;
+      inset:0;
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      display:block;
+      opacity:.9;
+    }
+    .slide-img::after{
+      content:'';
+      position:absolute;
+      inset:0;
+      background:linear-gradient(180deg,transparent 50%,var(--card));
+      pointer-events:none;
+    }
+    .slide-body{padding:18px 16px 16px;display:flex;flex-direction:column;gap:10px}
+    .slide-num{font-family:var(--fm);font-size:9px;color:var(--muted);letter-spacing:.2em}
+    .slide-cat{font-family:var(--fm);font-size:9px;text-transform:uppercase;letter-spacing:.18em;color:var(--accent)}
+    .slide-title{font-family:var(--fd);font-size:clamp(18px,5vw,26px);font-weight:900;text-transform:uppercase;letter-spacing:.05em;line-height:1.1}
+    .slide-desc{font-size:12px;color:var(--muted);line-height:1.7}
+    .slide-kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+    .kpi{background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:10px 6px;text-align:center}
+    .kpi-val{font-family:var(--fd);font-size:18px;font-weight:900;color:var(--gold);line-height:1;margin-bottom:3px}
+    .kpi-lbl{font-family:var(--fm);font-size:8px;text-transform:uppercase;letter-spacing:.1em;color:var(--muted)}
+    .slide-nav{display:flex;justify-content:space-between;align-items:center;margin-top:12px}
     .dots{display:flex;gap:6px;align-items:center}
-    .dot{width:6px;height:6px;border-radius:50%;background:var(--border);cursor:pointer;transition:all .2s}
+    .dot{width:6px;height:6px;border-radius:50%;background:var(--border);cursor:pointer;transition:all .2s;-webkit-tap-highlight-color:transparent}
     .dot.on{background:var(--accent);transform:scale(1.5)}
     .arrows{display:flex;gap:8px}
-    .arrow{font-family:var(--fm);font-size:10px;text-transform:uppercase;letter-spacing:.14em;padding:8px 14px;border:1px solid var(--border);border-radius:3px;background:transparent;color:var(--muted);cursor:pointer;transition:all .15s}
-    .arrow:hover{border-color:var(--accent);color:var(--accent)}
+    .arrow{font-family:var(--fm);font-size:10px;text-transform:uppercase;letter-spacing:.12em;padding:8px 12px;border:1px solid var(--border);border-radius:3px;background:transparent;color:var(--muted);cursor:pointer;transition:all .15s;-webkit-tap-highlight-color:transparent}
+    .arrow:active{border-color:var(--accent);color:var(--accent)}
 
-    .proj-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
-    .proj{border:1px solid var(--border);border-radius:6px;padding:16px;background:var(--bg);transition:transform .22s,border-color .22s,box-shadow .22s}
-    .proj:hover{transform:translateY(-4px);border-color:rgba(0,170,255,.3);box-shadow:0 14px 36px rgba(0,0,0,.5)}
-    .proj-tag{font-family:var(--fm);font-size:9px;text-transform:uppercase;letter-spacing:.2em;color:var(--muted);margin-bottom:7px}
-    .proj-title{font-family:var(--fd);font-size:15px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:7px;line-height:1.2}
-    .proj-text{font-size:12px;color:var(--muted);line-height:1.7;margin-bottom:10px}
-    .proj-chips{display:flex;gap:6px;flex-wrap:wrap;padding-top:10px;border-top:1px solid var(--border)}
-    .chip{font-family:var(--fm);font-size:9px;color:var(--gold);background:rgba(232,255,0,.05);border:1px solid rgba(232,255,0,.18);padding:3px 8px;border-radius:3px;letter-spacing:.1em}
+    /* ── PROJECTS — 1 col mobile ── */
+    .proj-grid{display:grid;grid-template-columns:1fr;gap:10px}
+    .proj{border:1px solid var(--border);border-radius:6px;padding:14px;background:var(--bg)}
+    .proj-tag{font-family:var(--fm);font-size:9px;text-transform:uppercase;letter-spacing:.18em;color:var(--muted);margin-bottom:6px}
+    .proj-title{font-family:var(--fd);font-size:15px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;margin-bottom:6px;line-height:1.2}
+    .proj-text{font-size:12px;color:var(--muted);line-height:1.65;margin-bottom:8px}
+    .proj-chips{display:flex;gap:5px;flex-wrap:wrap;padding-top:8px;border-top:1px solid var(--border)}
+    .chip{font-family:var(--fm);font-size:9px;color:var(--gold);background:rgba(232,255,0,.05);border:1px solid rgba(232,255,0,.18);padding:3px 7px;border-radius:3px;letter-spacing:.08em}
 
+    /* ── TIMELINE ── */
     .tl{position:relative}
     .tl::before{content:'';position:absolute;left:0;top:8px;bottom:0;width:1px;background:linear-gradient(180deg,var(--accent),transparent)}
-    .tl-item{padding-left:22px;margin-bottom:28px;position:relative}
-    .tl-item::before{content:'';position:absolute;left:-3px;top:8px;width:7px;height:7px;background:var(--accent);border-radius:50%;box-shadow:0 0 8px var(--accent)}
-    .tl-date{font-family:var(--fm);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:3px}
-    .tl-role{font-family:var(--fd);font-size:18px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;margin-bottom:2px}
-    .tl-co{font-family:var(--fm);font-size:10px;color:var(--accent);letter-spacing:.12em;margin-bottom:10px}
+    .tl-item{padding-left:18px;margin-bottom:24px;position:relative}
+    .tl-item::before{content:'';position:absolute;left:-3px;top:8px;width:7px;height:7px;background:var(--accent);border-radius:50%;box-shadow:0 0 6px var(--accent)}
+    .tl-date{font-family:var(--fm);font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:3px}
+    .tl-role{font-family:var(--fd);font-size:16px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;margin-bottom:2px}
+    .tl-co{font-family:var(--fm);font-size:10px;color:var(--accent);letter-spacing:.1em;margin-bottom:8px}
     .tl-list{list-style:none;display:grid;gap:5px}
-    .tl-list li{font-size:12px;color:var(--muted);padding-left:14px;position:relative;line-height:1.65}
+    .tl-list li{font-size:12px;color:var(--muted);padding-left:14px;position:relative;line-height:1.6}
     .tl-list li::before{content:'→';position:absolute;left:0;color:var(--accent);font-size:10px;top:1px}
     .tl-list li strong{color:var(--text);font-weight:500}
 
-    .sc{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:18px;margin-bottom:20px}
-    .sc-title{font-family:var(--fd);font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.2em;color:var(--muted);margin-bottom:14px;padding-bottom:10px;border-bottom:1px solid var(--border)}
-    .sk-row{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid var(--border)}
+    /* ── SIDEBAR — 2-col grid mobile ── */
+    aside{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .sc{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:14px;margin-bottom:0}
+    .sc-full{grid-column:1/-1}
+    .sc-title{font-family:var(--fd);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.18em;color:var(--muted);margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+    .sk-row{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid var(--border)}
     .sk-row:last-child{border-bottom:none}
     .sk-name{font-size:11px;color:var(--text)}
-    .sk-bar{width:56px;height:2px;background:var(--faint);border-radius:99px;overflow:hidden}
+    .sk-bar{width:48px;height:2px;background:var(--faint);border-radius:99px;overflow:hidden}
     .sk-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--gold));border-radius:99px;transform:scaleX(0);transform-origin:left}
-    .lang-row{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border);font-size:12px}
+    .lang-row{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--border);font-size:12px}
     .lang-row:last-child{border-bottom:none}
-    .lang-lv{font-family:var(--fm);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--accent)}
-    .edu-blk{margin-bottom:13px}
+    .lang-lv{font-family:var(--fm);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
+    .edu-blk{margin-bottom:11px}
     .edu-blk:last-child{margin-bottom:0}
     .edu-deg{font-size:12px;font-weight:500;margin-bottom:2px}
     .edu-uni{font-family:var(--fm);font-size:10px;color:var(--muted)}
     .edu-yr{font-family:var(--fm);font-size:9px;color:var(--accent)}
-    .ct-row{margin-bottom:10px}
-    .ct-lbl{font-family:var(--fm);font-size:8px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin-bottom:2px}
+    .ct-row{margin-bottom:9px}
+    .ct-lbl{font-family:var(--fm);font-size:8px;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:2px}
     .ct-val{font-size:11px;color:var(--text)}
-    .ct-val a{color:var(--accent);transition:opacity .15s}
-    .ct-val a:hover{opacity:.7}
+    .ct-val a{color:var(--accent)}
 
-    footer{margin-top:48px;padding-top:20px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
-    .ft-copy{font-family:var(--fm);font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted)}
+    /* ── FOOTER ── */
+    footer{margin-top:36px;padding-top:16px;border-top:1px solid var(--border);display:flex;flex-direction:column;gap:10px;align-items:center;text-align:center}
+    .ft-copy{font-family:var(--fm);font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
     .ft-links{display:flex;gap:16px}
-    .ft-links a{font-family:var(--fm);font-size:9px;text-transform:uppercase;letter-spacing:.18em;color:var(--muted);transition:color .15s}
-    .ft-links a:hover{color:var(--accent)}
+    .ft-links a{font-family:var(--fm);font-size:9px;text-transform:uppercase;letter-spacing:.16em;color:var(--muted);transition:color .15s}
+    .ft-links a:hover,.ft-links a:active{color:var(--accent)}
 
-    .rv{opacity:0;transform:translateY(22px);transition:opacity .55s ease,transform .55s ease}
+    /* ── REVEAL ── */
+    .rv{opacity:0;transform:translateY(20px);transition:opacity .5s ease,transform .5s ease}
     .rv.on{opacity:1;transform:none}
 
-    @keyframes up{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+    /* ── KEYFRAMES ── */
+    @keyframes up{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
     @keyframes fadeIn{from{opacity:0}to{opacity:1}}
     @keyframes mq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
     @keyframes fillBar{to{transform:scaleX(1)}}
     @keyframes spin{to{transform:rotate(360deg)}}
 
-    @media(max-width:860px){
-      main{grid-template-columns:1fr}
-      .stats{grid-template-columns:repeat(2,1fr)}
-      .proj-grid{grid-template-columns:1fr}
-      .slide-inner{grid-template-columns:1fr}
-      .slide-img{min-height:180px}
-      .slide-img::after{background:linear-gradient(180deg,transparent 60%,var(--card))}
-      .hero-head{flex-direction:column-reverse;align-items:flex-start;gap:16px}
-      .hero-photo{width:140px;height:140px}
-      .hero-right{text-align:left}
-      .hero-actions{justify-content:flex-start}
+    /* ── TABLET ── */
+    @media(min-width:640px){
+      .page{padding:0 28px 80px}
+      .hero-photo{width:180px;height:180px}
+      .stats{grid-template-columns:repeat(4,1fr)}
+      .stat{border-bottom:none}
+      .stat:nth-child(2){border-right:1px solid var(--border)}
+      .proj-grid{grid-template-columns:repeat(2,1fr)}
+      aside{grid-template-columns:1fr}
+      .sc-full{grid-column:auto}
+      footer{flex-direction:row;justify-content:space-between;text-align:left}
     }
-    @media(max-width:520px){
-      .hero-name{font-size:50px}
-      .stats{grid-template-columns:1fr 1fr}
-      .page{padding-inline:16px}
-      .hero-photo{width:110px;height:110px}
-      .hero-photo::before,.hero-photo::after{display:none}
-      .hero-photo img{border:2px solid var(--accent)}
-      .kpi-val{font-size:16px}
+
+    /* ── DESKTOP ── */
+    @media(min-width:900px){
+      main{display:grid;grid-template-columns:minmax(0,2.2fr) minmax(0,1fr);gap:28px}
+      .hero-photo{width:210px;height:210px}
+      .slide-inner{flex-direction:row;min-height:310px}
+      .slide-img{width:50%;height:auto;min-height:260px;flex-shrink:0}
+      .slide-img::after{background:linear-gradient(90deg,transparent 60%,var(--card))}
+      .slide-body{padding:26px 24px 22px}
+      .kpi-val{font-size:20px}
     }
   </style>
 </head>
@@ -223,13 +266,11 @@
     </div>
     <div class="hero-rule"></div>
     <div class="hero-foot">
-      <div class="hero-role">Senior Marketing Manager<br>Running &amp; Training · Europe</div>
-      <div class="hero-right">
-        <p class="hero-tag">Pan-European marketing leader. 4+ years at PUMA Group turning strategy into market share, campaigns into culture, and budgets into measurable business results.</p>
-        <div class="hero-actions">
-          <button class="btn btn-p" onclick="window.print()">Download CV</button>
-          <button class="btn btn-o" onclick="document.getElementById('showcase').scrollIntoView({behavior:'smooth'})">View work ↓</button>
-        </div>
+      <div class="hero-role">Senior Marketing Manager · Running &amp; Training · Europe</div>
+      <p class="hero-tag">Pan-European marketing leader. 4+ years at PUMA Group turning strategy into market share, campaigns into culture, and budgets into measurable business results.</p>
+      <div class="hero-actions">
+        <button class="btn btn-p" onclick="window.print()">Download CV</button>
+        <button class="btn btn-o" onclick="document.getElementById('showcase').scrollIntoView({behavior:'smooth'})">View work ↓</button>
       </div>
     </div>
   </header>
@@ -253,328 +294,3 @@
 
       <div class="rv" id="about">
         <div class="sh"><span class="sh-tag">Profile</span><span class="sh-title">About</span></div>
-        <div class="card">
-          <p class="about-text">
-            I don't just run campaigns. I build the <strong>marketing infrastructure that moves categories.</strong><br><br>
-            In four years at PUMA, I went from intern to Senior Marketing Manager — not by waiting for opportunities, but by <strong>creating them.</strong> I took a Running category with <em>zero European market share</em> and helped turn it into a growing, culturally relevant business. I built ambassador strategies that became blueprints. I activated partnerships that others had only planned on paper. I delivered events people still talk about.<br><br>
-            My work sits at the intersection of <strong>brand and commerce.</strong> I understand how a storytelling decision on Monday affects sell-through on Friday. I know how to align a room of stakeholders across five countries — and then actually execute.
-          </p>
-          <div class="pills">
-            <span class="pill pill-h">Running &amp; Training</span>
-            <span class="pill">Full-funnel campaigns</span>
-            <span class="pill">Partner activation</span>
-            <span class="pill">Influencer strategy</span>
-            <span class="pill">Experiential marketing</span>
-            <span class="pill">GTM execution</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="rv" id="showcase">
-        <div class="sh"><span class="sh-tag">Case studies</span><span class="sh-title">Project Showcase</span></div>
-        <div class="card" style="padding-bottom:14px">
-          <div class="slider-wrap">
-            <div class="slides" id="slides">
-
-              <div class="slide">
-                <div class="slide-inner">
-                  <div class="slide-img">
-                    <!-- Replace with: <img src="assets/go-wild.jpg" alt="Go Wild 2025"> -->
-                    <div class="slide-img-ph">
-                      <div class="ph-box"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div>
-                      <div class="ph-name">Go Wild 2025</div>
-                     <img src="assets/go-wild.jpg" alt="Go Wild 2025">
-                    </div>
-                  </div>
-                  <div class="slide-body">
-                    <div>
-                      <div class="slide-num">01 / 04</div>
-                      <div class="slide-cat">Full-Funnel · Pan-European Campaign</div>
-                      <h2 class="slide-title">Go Wild 2025</h2>
-                      <p class="slide-desc">PUMA's largest Running campaign in Europe — full-funnel across paid, owned and earned channels, integrating creators, influencers and retail partners across 10+ markets to drive brand heat and sell-through simultaneously.</p>
-                    </div>
-                    <div class="slide-kpis">
-                      <div class="kpi"><div class="kpi-val">1B+</div><div class="kpi-lbl">Impressions</div></div>
-                      <div class="kpi"><div class="kpi-val">20%</div><div class="kpi-lbl">Engagement</div></div>
-                      <div class="kpi"><div class="kpi-val">+10%</div><div class="kpi-lbl">Sales uplift</div></div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="slide">
-                <div class="slide-inner">
-                  <div class="slide-img">
-                    <!-- Replace with: <img src="assets/running-category.jpg" alt="Running Category"> -->
-                    <div class="slide-img-ph">
-                      <div class="ph-box"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div>
-                      <div class="ph-name">Running Category</div>
-                      <img src="assets/running-category.jpg" alt="Running Category">
-                    </div>
-                  </div>
-                  <div class="slide-body">
-                    <div>
-                      <div class="slide-num">02 / 04</div>
-                      <div class="slide-cat">Category Growth · Market Share</div>
-                      <h2 class="slide-title">Running Category — Europe</h2>
-                      <p class="slide-desc">Appointed Running Marketing Lead for EMEA, built category marketing infrastructure from near zero. Aligned GTM, product, PR and retail to grow market share in under 12 months.</p>
-                    </div>
-                    <div class="slide-kpis">
-                      <div class="kpi"><div class="kpi-val">0→3%</div><div class="kpi-lbl">Market share</div></div>
-                      <div class="kpi"><div class="kpi-val">12mo</div><div class="kpi-lbl">Timeline</div></div>
-                      <div class="kpi"><div class="kpi-val">10+</div><div class="kpi-lbl">Markets</div></div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="slide">
-                <div class="slide-inner">
-                  <div class="slide-img">
-                    <!-- Replace with: <img src="assets/boston-hyrox.jpg" alt="Boston & Hyrox"> -->
-                    <div class="slide-img-ph">
-                      <div class="ph-box"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div>
-                      <div class="ph-name">Boston / Hyrox</div>
-                      <img src="assets/boston-hyrox.jpg" alt="Boston and Hyrox">
-                    </div>
-                  </div>
-                  <div class="slide-body">
-                    <div>
-                      <div class="slide-num">03 / 04</div>
-                      <div class="slide-cat">Experiential · Events</div>
-                      <h2 class="slide-title">High-Impact events </h2>
-                      <p class="slide-desc"> London Marathon 2026,Boston Marathon 2025, Faster Monza 2023 and Hyrox Europe roll-out. Each event integrated brand experience, creator strategy, PR and live content into frameworks generating sustained brand heat beyond event day.</p>
-                    </div>
-                    <div class="slide-kpis">
-                      <div class="kpi"><div class="kpi-val">3</div><div class="kpi-lbl">Major events</div></div>
-                      <div class="kpi"><div class="kpi-val">Pan-EU</div><div class="kpi-lbl">Coverage</div></div>
-                      <div class="kpi"><div class="kpi-val">PR+</div><div class="kpi-lbl">Media earned</div></div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="slide">
-                <div class="slide-inner">
-                  <div class="slide-img">
-                    <!-- Replace with: <img src="assets/intersport-hyrox.jpg" alt="Intersport & Hyrox"> -->
-                    <div class="slide-img-ph">
-                      <div class="ph-box"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg></div>
-                      <div class="ph-name">Intersport / Hyrox</div>
-                      <img src="assets/intersport-hyrox.jpg" alt="Intersport Hyrox">
-                    </div>
-                  </div>
-                  <div class="slide-body">
-                    <div>
-                      <div class="slide-num">04 / 04</div>
-                      <div class="slide-cat">Trade · Wholesale · Partners</div>
-                      <h2 class="slide-title">Hyrox &amp; Intersport Omnichannel</h2>
-                      <p class="slide-desc">Led omnichannel activations with Hyrox and Intersport — PUMA's largest wholesale partner in Europe. Unified influencer, event, content and PR frameworks aligned with DTC and wholesale sell-through goals.</p>
-                    </div>
-                    <div class="slide-kpis">
-                      <div class="kpi"><div class="kpi-val">50%</div><div class="kpi-lbl">Sell-through</div></div>
-                      <div class="kpi"><div class="kpi-val">4wk</div><div class="kpi-lbl">First window</div></div>
-                      <div class="kpi"><div class="kpi-val">€10M</div><div class="kpi-lbl">Budget</div></div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-            </div>
-          </div>
-          <div class="slide-nav">
-            <div class="dots" id="dots">
-              <div class="dot on" onclick="goTo(0)"></div>
-              <div class="dot" onclick="goTo(1)"></div>
-              <div class="dot" onclick="goTo(2)"></div>
-              <div class="dot" onclick="goTo(3)"></div>
-            </div>
-            <div class="arrows">
-              <button class="arrow" onclick="prev()">← Prev</button>
-              <button class="arrow" onclick="next()">Next →</button>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="rv">
-        <div class="sh"><span class="sh-tag">Selected work</span><span class="sh-title">Key Projects</span></div>
-        <div class="card">
-          <div class="proj-grid">
-            <article class="proj">
-              <div class="proj-tag">Running · Market share</div>
-              <h3 class="proj-title">Running Category Growth</h3>
-              <p class="proj-text">Grew Running market share 0%→3% across Europe in under 12 months as EMEA Running Marketing Lead.</p>
-              <div class="proj-chips"><span class="chip">+3pts market share</span><span class="chip">12 months</span><span class="chip">Pan-EU</span></div>
-            </article>
-            <article class="proj">
-              <div class="proj-tag">Full-funnel · Campaign</div>
-              <h3 class="proj-title">Go Wild 2025</h3>
-              <p class="proj-text">PUMA's largest Running campaign in Europe — full-funnel, multi-market, creators + retail + PR unified.</p>
-              <div class="proj-chips"><span class="chip">1B impressions</span><span class="chip">20% engagement</span><span class="chip">+10% sales</span></div>
-            </article>
-            <article class="proj">
-              <div class="proj-tag">Experiential · Events</div>
-              <h3 class="proj-title">The High Point &amp; Hyrox EU</h3>
-              <p class="proj-text">Boston Marathon 2025, Faster Monza 2023 and Hyrox Europe roll-out — event, creator and PR in one framework.</p>
-              <div class="proj-chips"><span class="chip">3 major events</span><span class="chip">Pan-EU press</span><span class="chip">Community-led</span></div>
-            </article>
-            <article class="proj">
-              <div class="proj-tag">Trade · Partners</div>
-              <h3 class="proj-title">Hyrox &amp; Intersport Omnichannel</h3>
-              <p class="proj-text">Omnichannel activations across 10+ markets with PUMA's largest wholesale partner.</p>
-              <div class="proj-chips"><span class="chip">10+ markets</span><span class="chip">50% sell-through</span><span class="chip">€10M budget</span></div>
-            </article>
-          </div>
-        </div>
-      </div>
-
-      <div class="rv">
-        <div class="sh"><span class="sh-tag">Career</span><span class="sh-title">Experience</span></div>
-        <div class="card">
-          <div class="tl">
-            <div class="tl-item">
-              <div class="tl-date">Jan 2025 — Present</div>
-              <div class="tl-role">Senior Marketing Manager</div>
-              <div class="tl-co">PUMA Group · Running, Training &amp; Teamsport Europe</div>
-              <ul class="tl-list">
-                <li>Grew Running market share from <strong>0% to 3%</strong> across Europe in under 12 months.</li>
-                <li>Delivered Go Wild 2025 — <strong>1B impressions, 20% engagement, +10% sales uplift</strong> — PUMA's largest Running activation in Europe.</li>
-                <li>Managed a <strong>€10M multi-market budget</strong> across Running, Training, Football and Handball.</li>
-                <li>Led omnichannel activations with Hyrox and Intersport across <strong>10+ European markets.</strong></li>
-                <li>Aligned GTM, Sales, Product and Creative across EMEA for consistent brand execution.</li>
-              </ul>
-            </div>
-            <div class="tl-item">
-              <div class="tl-date">Jan 2022 — Dec 2024</div>
-              <div class="tl-role">Marketing Manager</div>
-              <div class="tl-co">PUMA Group · Running &amp; Training Europe</div>
-              <ul class="tl-list">
-                <li>Drove Running sell-through to <strong>50% in the first 4 weeks</strong> through campaign sequencing and channel alignment.</li>
-                <li>Secured <strong>Pamela Reif</strong> as European Training ambassador — strategy became the EMEA blueprint.</li>
-                <li>Led <strong>Intersport International</strong> campaign strategy — PUMA's largest wholesale partner across Europe.</li>
-                <li>Established the European Training category marketing function <strong>from scratch.</strong></li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-
-    </div>
-
-    <aside>
-      <div class="rv">
-        <div class="sc" id="skills">
-          <div class="sc-title">Core Skills</div>
-          <div class="sk-row"><span class="sk-name">Full-funnel campaigns</span><div class="sk-bar"><div class="sk-fill" data-w=".95"></div></div></div>
-          <div class="sk-row"><span class="sk-name">GTM strategy</span><div class="sk-bar"><div class="sk-fill" data-w=".92"></div></div></div>
-          <div class="sk-row"><span class="sk-name">Partner activation</span><div class="sk-bar"><div class="sk-fill" data-w=".90"></div></div></div>
-          <div class="sk-row"><span class="sk-name">Event marketing</span><div class="sk-bar"><div class="sk-fill" data-w=".90"></div></div></div>
-          <div class="sk-row"><span class="sk-name">Budget &amp; ROI</span><div class="sk-bar"><div class="sk-fill" data-w=".87"></div></div></div>
-          <div class="sk-row"><span class="sk-name">Cross-functional leadership</span><div class="sk-bar"><div class="sk-fill" data-w=".90"></div></div></div>
-          <div class="sk-row"><span class="sk-name">Influencer strategy</span><div class="sk-bar"><div class="sk-fill" data-w=".88"></div></div></div>
-          <div class="sk-row"><span class="sk-name">Data-driven optimisation</span><div class="sk-bar"><div class="sk-fill" data-w=".82"></div></div></div>
-        </div>
-      </div>
-      <div class="rv">
-        <div class="sc">
-          <div class="sc-title">Languages</div>
-          <div class="lang-row"><span>Spanish</span><span class="lang-lv">Native</span></div>
-          <div class="lang-row"><span>English</span><span class="lang-lv">Proficient · C1</span></div>
-          <div class="lang-row"><span>German</span><span class="lang-lv">Beginner · A1/A2</span></div>
-        </div>
-      </div>
-      <div class="rv">
-        <div class="sc">
-          <div class="sc-title">Education</div>
-          <div class="edu-blk">
-            <div class="edu-deg">MBA in Sport Management</div>
-            <div class="edu-uni">Polytechnic University of Valencia</div>
-            <div class="edu-yr">2020 – 2022</div>
-          </div>
-          <div class="edu-blk">
-            <div class="edu-deg">Master in Big Data in Sports</div>
-            <div class="edu-uni">UCAM · Universidad Católica de Murcia</div>
-            <div class="edu-yr">2020 – 2021</div>
-          </div>
-          <div class="edu-blk">
-            <div class="edu-deg">Bachelor in Sports Science</div>
-            <div class="edu-uni">University of Valencia</div>
-            <div class="edu-yr">2016 – 2020</div>
-          </div>
-        </div>
-      </div>
-      <div class="rv">
-        <div class="sc">
-          <div class="sc-title">Contact</div>
-          <div class="ct-row"><div class="ct-lbl">Email</div><div class="ct-val"><a href="mailto:javier.alfonso.moreno@gmail.com">javier.alfonso.moreno@gmail.com</a></div></div>
-          <div class="ct-row"><div class="ct-lbl">Phone</div><div class="ct-val"><a href="tel:+34622889027">+34 622 889 027</a></div></div>
-          <div class="ct-row"><div class="ct-lbl">Location</div><div class="ct-val">Fürth, Germany · EMEA</div></div>
-          <div class="ct-row"><div class="ct-lbl">LinkedIn</div><div class="ct-val"><a href="https://linkedin.com/in/javieralfonsomoreno" target="_blank">javieralfonsomoreno ↗</a></div></div>
-        </div>
-      </div>
-    </aside>
-  </main>
-
-  <footer>
-    <div class="ft-copy">© 2026 Javier Alfonso Moreno — Marketing Portfolio</div>
-    <div class="ft-links">
-      <a href="#about">Profile</a>
-      <a href="#showcase">Projects</a>
-      <a href="#skills">Skills</a>
-    </div>
-  </footer>
-
-</div>
-
-<script>
-(function(){
-  const cur  = document.getElementById('cur');
-  const ring = document.getElementById('cur-ring');
-  let mx=0,my=0,rx=0,ry=0;
-  document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;});
-  (function tick(){
-    if(cur)  cur.style.transform  =`translate(${mx-5}px,${my-5}px)`;
-    rx+=(mx-rx)*.11; ry+=(my-ry)*.11;
-    if(ring) ring.style.transform =`translate(${rx-17}px,${ry-17}px)`;
-    requestAnimationFrame(tick);
-  })();
-  document.querySelectorAll('a,button').forEach(el=>{
-    el.addEventListener('mouseenter',()=>{if(cur){cur.style.width='18px';cur.style.height='18px';}});
-    el.addEventListener('mouseleave',()=>{if(cur){cur.style.width='10px';cur.style.height='10px';}});
-  });
-
-  const rvObs=new IntersectionObserver(entries=>{
-    entries.forEach((e,i)=>{
-      if(e.isIntersecting){setTimeout(()=>e.target.classList.add('on'),i*70);rvObs.unobserve(e.target);}
-    });
-  },{threshold:.07});
-  document.querySelectorAll('.rv').forEach(el=>rvObs.observe(el));
-
-  const skObs=new IntersectionObserver(entries=>{
-    entries.forEach(e=>{
-      if(e.isIntersecting){
-        const w=parseFloat(e.target.dataset.w||1)*100;
-        e.target.style.width=w+'%';
-        e.target.style.animation='fillBar .9s ease-out forwards';
-        skObs.unobserve(e.target);
-      }
-    });
-  },{threshold:.3});
-  document.querySelectorAll('.sk-fill').forEach(f=>skObs.observe(f));
-
-  let cs=0;
-  const total=4;
-  const slidesEl=document.getElementById('slides');
-  const dotsEl=document.querySelectorAll('.dot');
-  function goTo(n){cs=(n+total)%total;slidesEl.style.transform=`translateX(-${cs*100}%)`;dotsEl.forEach((d,i)=>d.classList.toggle('on',i===cs));}
-  function next(){goTo(cs+1);}
-  function prev(){goTo(cs-1);}
-  window.goTo=goTo; window.next=next; window.prev=prev;
-  let auto=setInterval(next,5500);
-  document.getElementById('slides').addEventListener('touchstart',()=>clearInterval(auto),{passive:true});
-})();
-</script>
-
-</body>
-</html>
